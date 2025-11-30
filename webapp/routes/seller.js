@@ -118,11 +118,18 @@ router.post("/validate-price", (req, res) => {
     // Absolute path to Python script
     const pyPath = path.join(__dirname, "../validate_price.py");
 
-    const py = spawn("/opt/homebrew/Caskroom/miniforge/base/bin/python3", [pyPath, equipment, price]);
+    // Use 'python' command which should be in the system PATH on Windows
+    const py = spawn("python", [pyPath, equipment, price]);
 
     let result = "";
     py.stdout.on("data", data => result += data.toString());
     py.stderr.on("data", data => console.error("Python error:", data.toString()));
+
+    // Add error handler to prevent server crash
+    py.on("error", (err) => {
+        console.error("Failed to start Python process:", err);
+        res.status(500).json({ valid: false, message: "Server configuration error: Python not found" });
+    });
 
     py.on("close", () => {
         try {

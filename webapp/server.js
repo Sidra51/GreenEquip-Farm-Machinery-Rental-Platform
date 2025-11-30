@@ -16,6 +16,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(async (req, res, next) => {
+    res.locals.user = null;
     const token = req.cookies.token;
     console.log("===== server middleware =====");
     console.log("Token from cookies:", token);

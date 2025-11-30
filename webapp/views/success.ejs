@@ -3,17 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Success</title>
+    <title>Payment Success - GreenEquip</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/modern.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
-<body class="bg-emerald-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
-        <h1 class="text-3xl font-bold text-emerald-700 mb-4">Payment Successful!</h1>
-        <p class="mb-2">Your booking for <%= listing.name %> is confirmed.</p>
-        <p class="mb-2">Days: <%= days %></p>
-        <p class="mb-4">Total Paid: ₹<%= amount %></p>
-        <p class="mb-4 text-sm">Transaction Hash: <a href="https://sepolia.etherscan.io/tx/<%= txHash %>" target="_blank" class="text-blue-500"><%= txHash %></a></p>
-        <a href="/farmer" class="bg-emerald-600 text-white px-4 py-2 rounded">Back to Dashboard</a>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full animate-fade-in-up">
+        <!-- Success Animation -->
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-200 animate-bounce">
+                <i data-lucide="check" class="w-12 h-12 text-emerald-600"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
+            <p class="text-gray-500">Your booking has been confirmed.</p>
+        </div>
+
+        <!-- Receipt Card -->
+        <div class="bg-white p-8 rounded-3xl shadow-xl relative overflow-hidden">
+            <!-- Decorative circles -->
+            <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-gray-50 rounded-full"></div>
+            <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-gray-50 rounded-full"></div>
+            <div class="absolute left-8 right-8 top-1/2 border-t-2 border-dashed border-gray-100"></div>
+
+            <!-- Top Section -->
+            <div class="pb-8 text-center">
+                <p class="text-sm text-gray-400 uppercase tracking-wider mb-1">Total Paid</p>
+                <p class="text-4xl font-bold text-emerald-600">₹<%= amount %></p>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="pt-8 space-y-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500">Equipment</span>
+                    <span class="font-bold text-gray-900"><%= listing.name %></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500">Duration</span>
+                    <span class="font-bold text-gray-900"><%= days %> Days</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-500">Date</span>
+                    <span class="font-bold text-gray-900"><%= new Date().toLocaleDateString() %></span>
+                </div>
+                
+                <div class="bg-gray-50 p-3 rounded-xl mt-4">
+                    <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Transaction Hash</p>
+                    <div class="flex items-center gap-2">
+                        <p class="text-xs font-mono text-gray-600 truncate flex-1"><%= txHash %></p>
+                        <a href="https://sepolia.etherscan.io/tx/<%= txHash %>" target="_blank" class="text-emerald-600 hover:text-emerald-700 p-1">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="mt-8 text-center">
+            <a href="/farmer" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-3.5 rounded-xl font-bold transition hover-lift shadow-lg">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Dashboard
+            </a>
+        </div>
     </div>
+
+    <script>
+        if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+    </script>
 </body>
 </html>

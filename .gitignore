@@ -1,0 +1,9 @@
+node_modules/
+.env
+.DS_Store
+__pycache__/
+*.pyc
+artifacts/
+cache/
+database.db
+webapp/node_modules/

@@ -9,28 +9,29 @@ const generateToken = (userId, role) => {
 };
 
 const verifyToken = (req, res, next) => {
-  // Debug log to see what's happening
-  console.log('Cookies:', req.cookies);
-  console.log('Authorization header:', req.headers.authorization);
-  
+  console.log(`[Auth Debug] Verifying token for ${req.originalUrl}`);
   const token = req.cookies.token || req.headers.authorization?.replace('Bearer ', '');
   
   if (!token) {
-    console.log('No token found');
-    // 👇 send to correct login page (default admin)
-    return res.redirect('/auth/login/admin');
+    console.log('[Auth Debug] No token found, redirecting to login');
+    // Redirect to the appropriate login based on the path if possible, or default to farmer for now as it's the most common
+    if (req.originalUrl.includes('/seller')) {
+        return res.redirect('/auth/login/seller');
+    } else if (req.originalUrl.includes('/admin')) {
+        return res.redirect('/auth/login/admin');
+    }
+    return res.redirect('/auth/login/farmer');
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    console.log('Token decoded successfully:', decoded);
+    console.log('[Auth Debug] Token verified for user:', decoded.userId, 'Role:', decoded.role);
     req.user = decoded;
     next();
   } catch (error) {
-    console.log('Token verification failed:', error.message);
+    console.log('[Auth Debug] Token verification failed:', error.message);
     res.clearCookie('token');
-    // 👇 send to correct login page (default admin)
-    return res.redirect('/auth/login/admin');
+    return res.redirect('/auth/login/farmer');
   }
 };
 
@@ -38,8 +39,7 @@ const requireRole = (roles) => {
   return (req, res, next) => {
     if (!req.user) {
       console.log('No user in request');
-      // 👇 send to correct login page (default admin)
-      return res.redirect('/auth/login/admin');
+      return res.redirect('/auth/login/farmer');
     }
     
     if (!roles.includes(req.user.role)) {

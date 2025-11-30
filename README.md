@@ -1,357 +1,141 @@
-# 🌾 FarmChain - Smart Agricultural Equipment Rental Platform
+<div align="center">
 
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-blue.svg)](https://www.mongodb.com/)
-[![Express.js](https://img.shields.io/badge/Express.js-5.1+-black.svg)](https://expressjs.com/)
-[![Python](https://img.shields.io/badge/Python-3.8+-yellow.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
+  <img src="https://img.icons8.com/fluency/96/tractor.png" alt="logo" width="80" height="80" />
 
-> **Empowering farmers with modern technology for efficient equipment rental and AI-powered recommendations**
+  # GreenEquip 
+  
+  **Smart Farming for a Better Future**
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![Node.js](https://img.shields.io/badge/Node.js-v14+-green.svg)](https://nodejs.org/)
+  [![Hardhat](https://img.shields.io/badge/Hardhat-Ethereum-yellow.svg)](https://hardhat.org/)
+  [![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 
-## 📋 Table of Contents
+  <p align="center">
+    <b>Rent advanced equipment, connect with verified sellers, and use AI to optimize your harvest.</b>
+    <br />
+    A decentralized platform empowering farmers with secure blockchain transactions and AI-driven insights.
+    <br />
+    <br />
+    <a href="#-features">Features</a> •
+    <a href="#-tech-stack">Tech Stack</a> •
+    <a href="#-getting-started">Getting Started</a> •
+    <a href="#-screenshots">Screenshots</a>
+  </p>
+</div>
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Technology Stack](#-technology-stack)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [API Documentation](#-api-documentation)
-- [AI Features](#-ai-features)
-- [Screenshots](#-screenshots)
-- [Contributing](#-contributing)
-- [License](#-license)
+---
 
-## 🌟 Overview
+## 🌾 About The Project
 
-FarmChain is a comprehensive agricultural equipment rental platform that connects farmers, equipment sellers, and administrators. The platform features a modern web application with JWT authentication, multilingual support (English/Marathi), text-to-speech functionality, and an AI-powered equipment recommendation system.
+**GreenEquip** is a revolutionary platform designed to bridge the gap between technology and agriculture. By leveraging **Blockchain** for secure, transparent transactions and **Artificial Intelligence** for personalized farming recommendations, we provide a comprehensive ecosystem for farmers to rent equipment and optimize their yields.
 
-### 🎯 Key Highlights
+### Key Value Propositions
+*   **Transparency**: All rental agreements and transactions are secured on the Ethereum blockchain.
+*   **Efficiency**: AI algorithms analyze soil and crop data to recommend the best machinery.
+*   **Accessibility**: A user-friendly interface connecting farmers with equipment owners seamlessly.
 
-- **Multi-Role Platform**: Farmer, Seller, and Admin portals
-- **Bilingual Support**: English and Marathi with seamless language switching
-- **Accessibility Features**: Text-to-speech functionality for Marathi content
-- **AI Integration**: Smart equipment recommendations based on crop, soil, and region
-- **Modern UI/UX**: Responsive design with Tailwind CSS
-- **Secure Authentication**: JWT-based authentication system
+---
 
 ## ✨ Features
 
-### 🔐 Authentication & Authorization
-- **JWT-based authentication** with secure token management
-- **Role-based access control** (Farmer, Seller, Admin)
-- **Session management** with cookie-based tokens
-- **Secure password hashing** using bcrypt
+| Feature | Description |
+| :--- | :--- |
+| 🚜 **Easy Rentals** | Browse hundreds of verified equipment listings. Book instantly with transparent pricing. |
+| 🧠 **AI Recommendations** | Smart AI analyzes your soil and crop data to suggest the perfect machinery for your needs. |
+| 🛡️ **Secure Blockchain** | Every transaction is recorded on the blockchain for 100% transparency and security. |
+| 📊 **Dashboards** | Dedicated dashboards for Farmers, Sellers, and Admins to manage bookings and listings. |
+| 🔐 **Secure Auth** | Robust authentication system using JWT and secure cookies. |
 
-### 🌐 Multi-Language Support
-- **Bilingual Interface**: English and Marathi
-- **Dynamic Language Switching**: Real-time text translation
-- **Accessibility**: Text-to-speech functionality for Marathi content
-- **Font Optimization**: Inter (English) and Noto Serif Devanagari (Marathi)
+---
 
-### 👨‍🌾 Farmer Portal
-- **Equipment Browsing**: View available equipment with filters
-- **Advanced Search**: Filter by region, category, and keywords
-- **Booking System**: Easy equipment rental with day selection
-- **Real-time Updates**: Live equipment availability status
+## 🛠️ Tech Stack
 
-### 🏪 Seller Portal
-- **Equipment Management**: Add, edit, and manage equipment listings
-- **Image Upload**: Support for equipment photos
-- **Pricing Control**: Set daily rental rates
-- **Status Tracking**: Monitor approval status of listings
-
-### 👨‍💼 Admin Portal
-- **Listing Approval**: Review and approve/decline equipment listings
-- **Content Management**: Edit and delete listings
-- **User Management**: Monitor platform activity
-- **Quality Control**: Ensure platform standards
-
-### 🤖 AI-Powered Features
-- **Smart Recommendations**: AI-driven equipment suggestions
-- **Multi-Agent System**: Collaborative AI agents for analysis
-- **Crop-Specific Advice**: Tailored recommendations based on crop type
-- **Regional Optimization**: Location-based equipment matching
-
-## 🛠 Technology Stack
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB ODM
-- **JWT** - Authentication tokens
-- **Multer** - File upload handling
-- **Bcrypt** - Password hashing
+This project is built using a modern full-stack architecture with Web3 integration.
 
 ### Frontend
-- **EJS** - Template engine
-- **Tailwind CSS** - Utility-first CSS framework
-- **JavaScript (ES6+)** - Client-side functionality
-- **Web Speech API** - Text-to-speech functionality
-- **Lucide Icons** - Modern icon library
+*   ![EJS](https://img.shields.io/badge/EJS-Template_Engine-B4CA65?style=flat-square&logo=ejs&logoColor=white) **EJS**: Server-side rendering for dynamic views.
+*   ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) **TailwindCSS**: Utility-first CSS framework for styling.
+*   ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) **Modern CSS**: Glassmorphism and custom animations.
 
-### AI & ML
-- **Python 3.8+** - AI backend
-- **Streamlit** - Web application framework
-- **LangChain** - AI framework
-- **Google Generative AI** - AI model integration
-- **CrewAI** - Multi-agent system
+### Backend
+*   ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white) **Node.js**: Runtime environment.
+*   ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=flat-square) **Express.js**: Web framework.
+*   ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=flat-square&logo=mongodb&logoColor=white) **MongoDB**: NoSQL database for user and listing data.
 
-### Development Tools
-- **Nodemon** - Development server
-- **Git** - Version control
-- **npm** - Package management
+### Blockchain & AI
+*   ![Hardhat](https://img.shields.io/badge/Hardhat-FFdb1c?style=flat-square&logo=ethereum&logoColor=white) **Hardhat**: Ethereum development environment.
+*   ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) **Python**: AI/ML models for pricing and recommendations.
 
-## 🚀 Installation
+---
+
+## 📸 Screenshots
+
+<div align="center">
+  <!-- 
+    PLACEHOLDER FOR SCREENSHOTS 
+    Please save your screenshots in the 'screenshots' folder with these names.
+  -->
+  <img src="screenshots/home.png" alt="Home Page" width="800" style="border-radius: 10px; margin-bottom: 20px;" />
+  <br />
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <img src="screenshots/dashboard.png" alt="Dashboard" width="45%" style="border-radius: 10px;" />
+    <img src="screenshots/login.png" alt="Login" width="45%" style="border-radius: 10px;" />
+  </div>
+</div>
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to set up the project locally.
 
 ### Prerequisites
-- Node.js 18+ 
-- MongoDB 6.0+
-- Python 3.8+
-- Git
+*   Node.js (v14 or higher)
+*   MongoDB (Local or Atlas)
+*   Python (for AI modules)
 
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/yourusername/FarmChain.git
-cd FarmChain
-```
+### Installation
 
-### Step 2: Install Node.js Dependencies
-```bash
-cd webapp
-npm install
-```
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/Farmchain.git
+    cd Farmchain
+    ```
 
-### Step 3: Install Python Dependencies
-```bash
-cd ..
-pip install -r requirements.txt
-```
+2.  **Install dependencies**
+    ```bash
+    # Install Node.js dependencies
+    npm install
+    
+    # Install Python dependencies (if applicable)
+    pip install -r requirements.txt
+    ```
 
-### Step 4: Set Up Environment Variables
-Create a `.env` file in the webapp directory:
-```env
-JWT_SECRET=your-secret-key-here
-MONGODB_URI=mongodb://localhost:27017/farmrent
-```
+3.  **Configure Environment**
+    *   Create a `.env` file in the root directory.
+    *   Add your MongoDB URI and JWT Secret.
 
-Create a `.env` file in the root directory for AI features:
-```env
-GOOGLE_API_KEY=your-google-api-key-here
-```
+4.  **Run the Application**
+    ```bash
+    npm run dev
+    ```
+    The server will start at `http://localhost:3000`.
 
-### Step 5: Start MongoDB
-```bash
-# macOS
-brew services start mongodb-community
-
-# Ubuntu/Debian
-sudo systemctl start mongodb
-
-# Windows
-# Start MongoDB service from Control Panel
-```
-
-## 💻 Usage
-
-### Running the Main Web Application
-```bash
-cd webapp
-npm run dev
-```
-Access at: http://localhost:3000
-
-### Running the AI Recommender
-```bash
-streamlit run app.py
-```
-Access at: http://localhost:8501
-
-### Default Admin Credentials
-- **Email**: alishaikhh15@gmail.com
-- **Password**: 123
-
-## 🔌 API Documentation
-
-### Authentication Endpoints
-```
-POST /auth/login/:role     - User login (farmer/seller/admin)
-POST /auth/signup/:role    - User registration (farmer/seller)
-GET  /auth/logout          - User logout
-```
-
-### Farmer Endpoints
-```
-GET  /farmer              - Farmer dashboard
-POST /farmer/book/:id     - Book equipment
-```
-
-### Seller Endpoints
-```
-GET  /seller              - Seller dashboard
-POST /seller/add          - Add new equipment listing
-```
-
-### Admin Endpoints
-```
-GET  /admin               - Admin dashboard
-POST /admin/approve/:id   - Approve listing
-POST /admin/decline/:id   - Decline listing
-POST /admin/delete/:id    - Delete listing
-```
-
-## 🤖 AI Features
-
-### Equipment Recommendation System
-The AI system uses multiple agents to provide intelligent equipment recommendations:
-
-1. **Crop Analysis Agent**: Analyzes crop requirements and growth patterns
-2. **Soil Analysis Agent**: Evaluates soil type and conditions
-3. **Regional Agent**: Considers local farming practices and climate
-4. **Equipment Agent**: Matches equipment to specific needs
-5. **Coordinator Agent**: Synthesizes recommendations from all agents
-
-### Input Parameters
-- **Crop Type**: Wheat, Rice, Sugarcane, Maize, Cotton, Millet, Pulses
-- **Soil Type**: Loamy, Clayey, Sandy, Alluvial, Black
-- **Season**: Rabi, Kharif
-- **Region**: Multiple Indian states
-
-### Output
-- **Personalized Recommendations**: Tailored equipment suggestions
-- **Detailed Analysis**: Comprehensive reasoning for recommendations
-- **Cost Optimization**: Budget-friendly equipment options
-
-## 📱 Screenshots
-
-### Home Page
-![Home Page](screenshots/home.png)
-
-### Farmer Portal
-![Farmer Portal](screenshots/farmer.png)
-
-### Seller Portal
-![Seller Portal](screenshots/seller.png)
-
-### Admin Portal
-![Admin Portal](screenshots/admin.png)
-
-### AI Recommender
-![AI Recommender](screenshots/ai-recommender.png)
-
-## 🌍 Language Support
-
-### English Interface
-- Clean, professional design
-- International accessibility
-- Standard web fonts
-
-### Marathi Interface
-- Native language support
-- Text-to-speech functionality
-- Devanagari script optimization
-- Cultural context awareness
-
-### Language Switching
-- Real-time language switching
-- Persistent language preferences
-- Seamless user experience
-
-## 🔒 Security Features
-
-- **JWT Authentication**: Secure token-based authentication
-- **Password Hashing**: Bcrypt encryption for passwords
-- **Input Validation**: Server-side validation for all inputs
-- **File Upload Security**: Secure image upload handling
-- **CORS Protection**: Cross-origin resource sharing protection
-- **Session Management**: Secure session handling
-
-## 📊 Database Schema
-
-### User Model
-```javascript
-{
-  name: String,
-  email: String,
-  password: String (hashed),
-  role: String (farmer/seller/admin),
-  createdAt: Date
-}
-```
-
-### Listing Model
-```javascript
-{
-  name: String,
-  category: String,
-  region: String,
-  pricePerDay: Number,
-  sellerName: String,
-  img: String,
-  status: String (pending/approved/declined),
-  createdAt: Date
-}
-```
-
-## 🚀 Deployment
-
-### Heroku Deployment
-```bash
-# Install Heroku CLI
-heroku create your-farmchain-app
-heroku config:set JWT_SECRET=your-secret-key
-heroku config:set MONGODB_URI=your-mongodb-uri
-git push heroku main
-```
-
-### Vercel Deployment
-```bash
-# Install Vercel CLI
-npm i -g vercel
-vercel
-```
+---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Guidelines
-- Follow ESLint configuration
-- Write meaningful commit messages
-- Add tests for new features
-- Update documentation
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Team
-
-- **Ali Shaikh** - Full Stack Developer & AI Integration
-- **Contributors** - Open source contributors
-
-## 📞 Support
-
-- **Email**: support@farmchain.com
-- **Documentation**: [Wiki](https://github.com/yourusername/FarmChain/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/FarmChain/issues)
-
-## 🙏 Acknowledgments
-
-- **MongoDB** for database solutions
-- **Tailwind CSS** for styling framework
-- **Google AI** for AI capabilities
-- **Open Source Community** for various libraries and tools
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ for the farming community</p>
-  <p>🌾 Empowering Agriculture Through Technology 🌾</p>
+  <p>Made with ❤️ by the GreenEquip Team</p>
 </div>

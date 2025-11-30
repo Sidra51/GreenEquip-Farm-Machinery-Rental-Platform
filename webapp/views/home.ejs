@@ -3,235 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-en="FarmChain - Empowering Farmers" data-mr="फार्मचेन - शेतकऱ्यांना सक्षम करणे">FarmChain - Empowering Farmers</title>
-  <meta name="description" content="FarmChain connects farmers, sellers, and admins to rent, sell, or manage farm equipment efficiently. | फार्मचेन शेतकरी, विक्रेते आणि प्रशासकांना जोडते.">
+  <title>GreenEquip - Empowering Farmers</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/modern.css">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-  <link rel="stylesheet" href="/css/speech.css">
-  <style>
-    body { font-family: 'Inter', sans-serif; background: #f7f4ed; color: #2d2a26; }
-    [lang="mr"] { font-family: 'Noto Serif Devanagari', sans-serif; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-    .section-padding { padding: 4rem 0; }
-    .card {
-      background: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-    .card:hover { transform: translateY(-4px); }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(247,244,237,0.95); backdrop-filter: blur(4px); border-bottom: 1px solid #e5e7eb; }
-    .nav-link { color: #2d2a26; padding: 0.5rem 1rem; text-decoration: none; position: relative; }
-    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(135deg, #2f855a, #68d391); transition: width 0.3s; }
-    .nav-link:hover::after { width: 100%; }
-    .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #f7f4ed; padding: 1rem; }
-    .mobile-menu.active { display: block; }
-    @media (min-width: 768px) { .mobile-hidden { display: flex; } .mobile-menu-btn { display: none; } .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 767px) { .mobile-hidden { display: none; } }
-  </style>
 </head>
-<body>
-  <div id="speech-controls" class="speech-controls">
-    <div class="text-sm font-semibold mb-2" data-en="Text-to-Speech" data-mr="मजकूर-ते-भाषण">Text-to-Speech</div>
-    <button id="stop-speech" class="speech-btn" data-en="Stop" data-mr="थांबवा">Stop</button>
-    <button id="pause-speech" class="speech-btn" data-en="Pause" data-mr="विराम">Pause</button>
-    <button id="resume-speech" class="speech-btn" data-en="Resume" data-mr="पुन्हा सुरू">Resume</button>
-  </div>
+<body class="bg-gray-50">
 
-  <nav>
-    <div class="container flex justify-between items-center h-16">
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-4 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <div class="container mx-auto flex justify-between items-center">
       <div class="flex items-center gap-2">
-        <i data-lucide="sprout" class="w-6 h-6 p-2 rounded-lg text-green-700 bg-green-100"></i>
-        <span class="text-xl font-bold speakable" data-en="FarmChain" data-mr="फार्मचेन">FarmChain</span>
+        <div class="bg-gradient-to-br from-emerald-500 to-lime-500 p-2 rounded-xl">
+          <i data-lucide="sprout" class="w-6 h-6 text-white"></i>
+        </div>
+        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-800 to-emerald-600">GreenEquip</span>
       </div>
-      <div class="mobile-hidden items-center gap-6">
-        <a href="#features" class="nav-link speakable" data-en="Features" data-mr="वैशिष्ट्ये">Features</a>
-        <a href="#testimonials" class="nav-link speakable" data-en="Testimonials" data-mr="प्रशंसापत्रे">Testimonials</a>
-        <a href="#contact" class="nav-link speakable" data-en="Contact" data-mr="संपर्क">Contact</a>
+      
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-gray-600 hover:text-emerald-600 font-medium transition">Features</a>
+        <a href="#testimonials" class="text-gray-600 hover:text-emerald-600 font-medium transition">Stories</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-4">
         <% if (typeof user !== 'undefined' && user) { %>
-          <span class="text-sm text-gray-600 speakable" data-en="Welcome, <%= user.name %>" data-mr="स्वागत आहे, <%= user.name %>">Welcome, <%= user.name %></span>
-          <% if (user.role === "farmer") { %>
-            <a href="/farmer" class="lang-btn speakable" data-en="Farmer Dashboard" data-mr="शेतकरी डॅशबोर्ड">Farmer Dashboard</a>
-          <% } else if (user.role === "seller") { %>
-            <a href="/seller" class="lang-btn speakable" data-en="Seller Dashboard" data-mr="विक्रेता डॅशबोर्ड">Seller Dashboard</a>
-          <% } else if (user.role === "admin") { %>
-            <a href="/admin" class="lang-btn speakable" data-en="Admin Dashboard" data-mr="प्रशासक डॅशबोर्ड">Admin Dashboard</a>
-          <% } %>
-          <a href="/auth/logout" class="lang-btn bg-red-500 hover:bg-red-600 text-white speakable" data-en="Logout" data-mr="लॉगआउट">Logout</a>
+          <span class="text-gray-600 font-medium">Welcome, <%= user.name %></span>
+          <a href="/auth/logout" class="text-red-500 font-medium hover:text-red-600 transition">Logout</a>
         <% } else { %>
-          <a href="/auth/login/farmer" class="lang-btn" data-en="Farmer Login" data-mr="शेतकरी लॉगिन">Farmer Login</a>
-          <a href="/auth/login/seller" class="lang-btn" data-en="Seller Login" data-mr="विक्रेता लॉगिन">Seller Login</a>
-          <a href="/auth/login/admin" class="lang-btn" data-en="Admin Login" data-mr="प्रशासक लॉगिन">Admin Login</a>
+          <a href="/auth/login/farmer" class="text-emerald-600 font-bold hover:text-emerald-700 transition">Login</a>
+          <a href="/auth/signup/farmer" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold transition shadow-lg shadow-emerald-200 hover:shadow-emerald-300">Sign Up</a>
         <% } %>
-        <button class="lang-btn active" onclick="window.FarmChainSpeech.setLanguage('en')" data-lang="en">English</button>
-        <button class="lang-btn" onclick="window.FarmChainSpeech.setLanguage('mr')" data-lang="mr">मराठी</button>
       </div>
-      <button class="mobile-menu-btn p-2" onclick="toggleMobileMenu()">
-        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
-        <i data-lucide="x" id="close-icon" class="w-6 h-6 hidden"></i>
+
+      <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+        <i data-lucide="menu" class="w-6 h-6 text-gray-800"></i>
       </button>
-      <div id="mobile-menu" class="mobile-menu">
-        <a href="#features" class="block p-2 speakable" data-en="Features" data-mr="वैशिष्ट्ये">Features</a>
-        <a href="#testimonials" class="block p-2 speakable" data-en="Testimonials" data-mr="प्रशंसापत्रे">Testimonials</a>
-        <a href="#contact" class="block p-2 speakable" data-en="Contact" data-mr="संपर्क">Contact</a>
-        <% if (typeof user !== 'undefined' && user) { %>
-          <span class="block p-2 text-sm text-gray-600 speakable" data-en="Welcome, <%= user.name %>" data-mr="स्वागत आहे, <%= user.name %>">Welcome, <%= user.name %></span>
-          <% if (user.role === "farmer") { %>
-            <a href="/farmer" class="block p-2 speakable" data-en="Farmer Dashboard" data-mr="शेतकरी डॅशबोर्ड">Farmer Dashboard</a>
-          <% } else if (user.role === "seller") { %>
-            <a href="/seller" class="block p-2 speakable" data-en="Seller Dashboard" data-mr="विक्रेता डॅशबोर्ड">Seller Dashboard</a>
-          <% } else if (user.role === "admin") { %>
-            <a href="/admin" class="block p-2 speakable" data-en="Admin Dashboard" data-mr="प्रशासक डॅशबोर्ड">Admin Dashboard</a>
-          <% } %>
-          <a href="/auth/logout" class="block p-2 bg-red-500 hover:bg-red-600 text-white speakable" data-en="Logout" data-mr="लॉगआउट">Logout</a>
-        <% } else { %>
-          <a href="/auth/login/farmer" class="block p-2" data-en="Farmer Login" data-mr="शेतकरी लॉगिन">Farmer Login</a>
-          <a href="/auth/login/seller" class="block p-2" data-en="Seller Login" data-mr="विक्रेता लॉगिन">Seller Login</a>
-          <a href="/auth/login/admin" class="block p-2" data-en="Admin Login" data-mr="प्रशासक लॉगिन">Admin Login</a>
-        <% } %>
-        <button class="lang-btn block p-2 active" onclick="window.FarmChainSpeech.setLanguage('en')" data-lang="en">English</button>
-        <button class="lang-btn block p-2" onclick="window.FarmChainSpeech.setLanguage('mr')" data-lang="mr">मराठी</button>
-      </div>
     </div>
   </nav>
 
-  <section class="min-h-screen flex items-center relative bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=1920&q=80');">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-black/20"></div>
-    <div class="container text-center text-white relative z-10">
-      <h1 class="text-5xl md:text-7xl font-bold mb-6 speakable" data-en="Empower Your Farm, Effortlessly" data-mr="आपले शेत सक्षम करा, सहजतेने">Empower Your Farm, Effortlessly</h1>
-      <p class="text-xl mb-8 max-w-3xl mx-auto speakable" data-en="FarmChain connects farmers, sellers, and admins to rent, sell, or manage farm equipment efficiently." data-mr="फार्मचेन शेतकरी, विक्रेते आणि प्रशासकांना जोडते, उपकरणे भाड्याने देण्यासाठी, विक्रीसाठी किंवा व्यवस्थापनासाठी.">FarmChain connects farmers, sellers, and admins to rent, sell, or manage farm equipment efficiently.</p>
-      <div class="flex flex-col md:flex-row gap-4 justify-center">
-        <% if (typeof user !== 'undefined' && user) { %>
-          <% if (user.role === "farmer") { %>
-            <a href="/farmer" class="btn speakable" data-en="Farmer Dashboard" data-mr="शेतकरी डॅशबोर्ड">Farmer Dashboard <i data-lucide="tractor" class="w-5 h-5"></i></a>
-          <% } else if (user.role === "seller") { %>
-            <a href="/seller" class="btn speakable" data-en="Seller Dashboard" data-mr="विक्रेता डॅशबोर्ड">Seller Dashboard <i data-lucide="users" class="w-5 h-5"></i></a>
-          <% } else if (user.role === "admin") { %>
-            <a href="/admin" class="btn speakable" data-en="Admin Dashboard" data-mr="प्रशासक डॅशबोर्ड">Admin Dashboard <i data-lucide="settings" class="w-5 h-5"></i></a>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center justify-center gap-8">
+    <button class="absolute top-6 right-6 p-2" onclick="toggleMobileMenu()">
+      <i data-lucide="x" class="w-8 h-8 text-gray-600"></i>
+    </button>
+    <a href="#features" class="text-2xl font-bold text-gray-800" onclick="toggleMobileMenu()">Features</a>
+    <a href="#testimonials" class="text-2xl font-bold text-gray-800" onclick="toggleMobileMenu()">Stories</a>
+    <% if (typeof user === 'undefined' || !user) { %>
+      <a href="/auth/login/farmer" class="text-2xl font-bold text-emerald-600" onclick="toggleMobileMenu()">Login</a>
+      <a href="/auth/signup/farmer" class="text-2xl font-bold text-emerald-600" onclick="toggleMobileMenu()">Sign Up</a>
+    <% } else { %>
+      <a href="/auth/logout" class="text-2xl font-bold text-red-500" onclick="toggleMobileMenu()">Logout</a>
+    <% } %>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2070&auto=format&fit=crop" alt="Farm" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-emerald-900/90"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+      <div class="text-white space-y-8 animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-100 text-sm font-medium">
+          <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+          <span>The Future of Farming is Here</span>
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+          Smart Farming for a <span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400">Better Future</span>
+        </h1>
+        
+        <p class="text-xl text-gray-200 max-w-lg leading-relaxed">
+          Rent advanced equipment, connect with verified sellers, and use AI to optimize your harvest.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-4">
+          <% if (typeof user !== 'undefined' && user) { %>
+            <% if (user.role === "farmer") { %>
+              <a href="/farmer" class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
+                Go to Dashboard <i data-lucide="arrow-right" class="w-5 h-5"></i>
+              </a>
+            <% } else { %>
+              <a href="/seller" class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
+                Go to Dashboard <i data-lucide="arrow-right" class="w-5 h-5"></i>
+              </a>
+            <% } %>
+          <% } else { %>
+            <a href="/auth/signup/farmer" class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
+              Join as Farmer <i data-lucide="tractor" class="w-5 h-5"></i>
+            </a>
+            <a href="/auth/signup/seller" class="glass text-white hover:bg-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
+              Join as Seller <i data-lucide="store" class="w-5 h-5"></i>
+            </a>
           <% } %>
-        <% } else { %>
-          <a href="/auth/login/farmer" class="btn speakable" data-en="Farmer Portal" data-mr="शेतकरी पोर्टल">Farmer Portal <i data-lucide="tractor" class="w-5 h-5"></i></a>
-          <a href="/auth/login/seller" class="btn speakable" data-en="Seller Portal" data-mr="विक्रेता पोर्टल">Seller Portal <i data-lucide="users" class="w-5 h-5"></i></a>
-          <a href="/auth/login/admin" class="btn speakable" data-en="Admin Portal" data-mr="प्रशासक पोर्टल">Admin Portal <i data-lucide="settings" class="w-5 h-5"></i></a>
-        <% } %>
+        </div>
       </div>
+
+      <!-- Hero Card -->
+      <div class="hidden md:block animate-fade-in-up delay-200">
+        <div class="glass p-8 rounded-3xl transform rotate-2 hover:rotate-0 transition duration-500">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <p class="text-sm text-gray-500 font-medium mb-1">Recommended for you</p>
+              <h3 class="text-2xl font-bold text-gray-800">John Deere 5310</h3>
+            </div>
+            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-bold">Available</span>
+          </div>
+          <img src="/images/green-new-tractor.jpg" alt="Tractor" class="w-full h-48 object-cover rounded-xl mb-6 shadow-md">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-sm text-gray-500">Daily Rate</p>
+              <p class="text-2xl font-bold text-emerald-600">₹2,500</p>
+            </div>
+            <button class="bg-gray-900 text-white p-3 rounded-xl hover:bg-gray-800 transition">
+              <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Wave Separator -->
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto text-emerald-50 fill-current">
+        <path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+      </svg>
     </div>
   </section>
 
-  <section id="features" class="section-padding">
-    <div class="container text-center">
-      <h2 class="text-4xl font-bold mb-6 speakable" data-en="Why Farmers Choose FarmChain" data-mr="शेतकरी फार्मचेन का निवडतात">Why Farmers Choose FarmChain</h2>
-      <p class="text-lg mb-12 max-w-2xl mx-auto text-gray-600 speakable" data-en="Built for agriculture, combining modern tech with farming needs." data-mr="शेतीसाठी तयार केलेले, आधुनिक तंत्रज्ञान आणि शेतीच्या गरजा एकत्रित करणारे.">Built for agriculture, combining modern tech with farming needs.</p>
+  <!-- Features Section -->
+  <section id="features" class="py-24 bg-emerald-50 relative">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+        <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm">Why Choose Us</span>
+        <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-6 text-gray-900">Everything you need to grow</h2>
+        <p class="text-xl text-gray-600">We combine traditional farming wisdom with cutting-edge technology.</p>
+      </div>
+
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="card">
-          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-            <i data-lucide="tractor" class="w-8 h-8 text-green-600"></i>
+        <!-- Feature 1 -->
+        <div class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-100">
+          <div class="w-14 h-14 bg-lime-100 rounded-2xl flex items-center justify-center mb-6 text-lime-600">
+            <i data-lucide="tractor" class="w-8 h-8"></i>
           </div>
-          <h3 class="text-xl font-semibold mb-3 speakable" data-en="Rent Equipment Easily" data-mr="उपकरणे सहज भाड्याने घ्या">Rent Equipment Easily</h3>
-          <p class="text-gray-600 speakable" data-en="Access verified tractors and tools with transparent pricing." data-mr="पडताळलेल्या शेतकरी आणि विक्रेत्यांकडून उपकरणे भाड्याने घ्या, त्यांच्या गुणवत्तेबद्दल खात्री असल्यास.">Access verified tractors and tools with transparent pricing.</p>
+          <h3 class="text-2xl font-bold mb-4 text-gray-800">Easy Rentals</h3>
+          <p class="text-gray-600 leading-relaxed">Browse hundreds of verified equipment listings. Book instantly with transparent pricing.</p>
         </div>
-        <div class="card">
-          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-            <i data-lucide="shield-check" class="w-8 h-8 text-green-600"></i>
+
+        <!-- Feature 2 -->
+        <div class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-200 border-emerald-200 bg-emerald-50/50">
+          <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 text-emerald-600">
+            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
           </div>
-          <h3 class="text-xl font-semibold mb-3 speakable" data-en="Secure Transactions" data-mr="सुरक्षित व्यवहार">Secure Transactions</h3>
-          <p class="text-gray-600 speakable" data-en="Secure payments and insurance protection for your farming investments." data-mr="सुरक्षित पेमेंट आणि विमा सुरक्षा, आपल्या शेतीच्या गुंतवणुकीचे संरक्षण.">Secure payments and insurance protection for your farming investments.</p>
+          <h3 class="text-2xl font-bold mb-4 text-gray-800">AI Recommendations</h3>
+          <p class="text-gray-600 leading-relaxed">Our smart AI analyzes your soil and crop data to suggest the perfect machinery.</p>
         </div>
-        <div class="card">
-          <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-            <i data-lucide="clock" class="w-8 h-8 text-green-600"></i>
+
+        <!-- Feature 3 -->
+        <div class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-300">
+          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-600">
+            <i data-lucide="shield-check" class="w-8 h-8"></i>
           </div>
-          <h3 class="text-xl font-semibold mb-3 speakable" data-en="24x7 Support" data-mr="२४x७ सहाय्य">24x7 Support</h3>
-          <p class="text-gray-600 speakable" data-en="Round-the-clock support from our help team for your farming needs." data-mr="आमच्या सहाय्य टीमकडून दिवस-रात्र सहाय्य, आपल्या शेतीच्या गरजांसाठी.">Round-the-clock support from our help team for your farming needs.</p>
+          <h3 class="text-2xl font-bold mb-4 text-gray-800">Secure Blockchain</h3>
+          <p class="text-gray-600 leading-relaxed">Every transaction is recorded on the blockchain for 100% transparency and security.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="testimonials" class="section-padding bg-gray-50">
-    <div class="container text-center">
-      <h2 class="text-4xl font-bold mb-6 speakable" data-en="Farmer Experiences" data-mr="शेतकऱ्यांचे अनुभव">Farmer Experiences</h2>
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div class="card">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span class="text-green-600 font-bold">R</span>
-            </div>
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-16 text-gray-900">Trusted by Farmers</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-gray-100">
+          <div class="flex items-center gap-4 mb-6">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Farmer" class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-md">
             <div>
-              <h4 class="font-semibold speakable" data-en="Rajesh Patil" data-mr="राजेश पाटील">Rajesh Patil</h4>
-              <p class="text-sm text-gray-600 speakable" data-en="Maharashtra" data-mr="महाराष्ट्र">Maharashtra</p>
+              <h4 class="font-bold text-lg text-gray-900">Rajesh Patil</h4>
+              <p class="text-emerald-600 text-sm font-medium">Maharashtra</p>
             </div>
           </div>
-          <p class="text-gray-700 speakable" data-en="FarmChain made my farming work much easier. Renting equipment is now very simple." data-mr="फार्मचेनने माझ्या शेतीचे काम खूप सोपे केले. उपकरणे भाड्याने घेणे आता खूप सोपे आहे.">FarmChain made my farming work much easier. Renting equipment is now very simple.</p>
+          <p class="text-gray-600 italic text-lg">"GreenEquip transformed how I manage my harvest. The equipment quality is top-notch."</p>
         </div>
-        <div class="card">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span class="text-green-600 font-bold">S</span>
-            </div>
+
+        <div class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-gray-100">
+          <div class="flex items-center gap-4 mb-6">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Farmer" class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-md">
             <div>
-              <h4 class="font-semibold speakable" data-en="Sunita Deshmukh" data-mr="सुनीता देशमुख">Sunita Deshmukh</h4>
-              <p class="text-sm text-gray-600 speakable" data-en="Karnataka" data-mr="कर्नाटक">Karnataka</p>
+              <h4 class="font-bold text-lg text-gray-900">Sunita Deshmukh</h4>
+              <p class="text-emerald-600 text-sm font-medium">Karnataka</p>
             </div>
           </div>
-          <p class="text-gray-700 speakable" data-en="Secure and reliable service. I am selling my tractor equipment here." data-mr="सुरक्षित आणि विश्वसनीय सेवा. मी माझ्या ट्रॅक्टरचे उपकरणे येथे विकत आहे.">Secure and reliable service. I am selling my tractor equipment here.</p>
+          <p class="text-gray-600 italic text-lg">"Renting out my tractor when I don't use it has given me a great extra income."</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="section-padding">
-    <div class="container text-center">
-      <h2 class="text-4xl font-bold mb-6 speakable" data-en="Contact Us" data-mr="संपर्क साधा">Contact Us</h2>
-      <p class="text-lg mb-8 max-w-2xl mx-auto text-gray-600 speakable" data-en="Contact us for your farming needs." data-mr="आपल्या शेतीच्या गरजांसाठी आमच्याशी संपर्क साधा.">Contact us for your farming needs.</p>
-      <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-        <div class="flex items-center gap-3">
-          <i data-lucide="mail" class="w-5 h-5 text-green-600"></i>
-          <span class="speakable" data-en="support@farmchain.com" data-mr="support@farmchain.com">support@farmchain.com</span>
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-16 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-lime-500"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <div class="col-span-1 md:col-span-2">
+          <div class="flex items-center gap-2 mb-6">
+            <i data-lucide="sprout" class="w-8 h-8 text-lime-400"></i>
+            <span class="text-3xl font-bold">GreenEquip</span>
+          </div>
+          <p class="text-gray-400 max-w-sm leading-relaxed">Empowering agriculture through technology. We are committed to helping farmers prosper with sustainable solutions.</p>
         </div>
-        <div class="flex items-center gap-3">
-          <i data-lucide="phone" class="w-5 h-5 text-green-600"></i>
-          <span class="speakable" data-en="+91 98765 43210" data-mr="+९१ ९८७६५ ४३२१०">+91 98765 43210</span>
+        <div>
+          <h4 class="font-bold text-lg mb-6 text-white">Platform</h4>
+          <ul class="space-y-4 text-gray-400">
+            <li><a href="#" class="hover:text-lime-400 transition">About Us</a></li>
+            <li><a href="#" class="hover:text-lime-400 transition">How it Works</a></li>
+            <li><a href="#" class="hover:text-lime-400 transition">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-6 text-white">Support</h4>
+          <ul class="space-y-4 text-gray-400">
+            <li><a href="#" class="hover:text-lime-400 transition">Help Center</a></li>
+            <li><a href="#" class="hover:text-lime-400 transition">Contact Us</a></li>
+            <li><a href="#" class="hover:text-lime-400 transition">Privacy Policy</a></li>
+          </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <footer class="bg-gray-800 text-white py-8">
-    <div class="container text-center">
-      <div class="flex justify-center items-center gap-2 mb-4">
-        <i data-lucide="sprout" class="w-6 h-6 text-green-400"></i>
-        <span class="text-xl font-bold speakable" data-en="FarmChain" data-mr="फार्मचेन">FarmChain</span>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-500">© 2024 GreenEquip. All Rights Reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+          <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+          <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+        </div>
       </div>
-      <p class="text-gray-400 mb-4 speakable" data-en="Technology for the future of farming" data-mr="शेतीच्या भविष्यासाठी तंत्रज्ञान">Technology for the future of farming</p>
-      <div class="flex justify-center gap-6">
-        <a href="#" class="text-gray-400 hover:text-white speakable" data-en="Privacy Policy" data-mr="गोपनीयता धोरण">Privacy Policy</a>
-        <a href="#" class="text-gray-400 hover:text-white speakable" data-en="Terms of Use" data-mr="वापरण्याच्या अटी">Terms of Use</a>
-        <a href="#" class="text-gray-400 hover:text-white speakable" data-en="Help" data-mr="सहाय्य">Help</a>
-      </div>
-      <p class="text-gray-500 mt-6 speakable" data-en="© 2024 FarmChain. All Rights Reserved." data-mr="© २०२४ फार्मचेन. सर्व हक्क राखीव.">© 2024 FarmChain. All Rights Reserved.</p>
     </div>
   </footer>
 
-  <script src="/js/speech.js"></script>
+
   <script>
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
     
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
-      const menuIcon = document.getElementById('menu-icon');
-      const closeIcon = document.getElementById('close-icon');
-      
-      menu.classList.toggle('active');
-      menuIcon.classList.toggle('hidden');
-      closeIcon.classList.toggle('hidden');
+      menu.classList.toggle('translate-x-full');
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-      window.FarmChainSpeech.setLanguage('en');
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('py-0');
+      } else {
+        nav.classList.remove('py-0');
+      }
     });
+    
   </script>
 </body>
 </html>
