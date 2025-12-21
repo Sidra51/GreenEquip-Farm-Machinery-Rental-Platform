@@ -31,6 +31,10 @@
           <a href="/auth/logout" class="text-red-500 font-medium hover:text-red-600 transition">Logout</a>
         <% } else { %>
           <a href="/auth/login/farmer" class="text-emerald-600 font-bold hover:text-emerald-700 transition">Login</a>
+          <a href="/auth/login/admin" class="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl font-bold transition shadow-lg shadow-indigo-200 hover:shadow-indigo-300">
+            <i data-lucide="shield" class="w-4 h-4"></i>
+            <span>Admin</span>
+          </a>
           <a href="/auth/signup/farmer" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold transition shadow-lg shadow-emerald-200 hover:shadow-emerald-300">Sign Up</a>
         <% } %>
       </div>
@@ -50,6 +54,10 @@
     <a href="#testimonials" class="text-2xl font-bold text-gray-800" onclick="toggleMobileMenu()">Stories</a>
     <% if (typeof user === 'undefined' || !user) { %>
       <a href="/auth/login/farmer" class="text-2xl font-bold text-emerald-600" onclick="toggleMobileMenu()">Login</a>
+      <a href="/auth/login/admin" class="flex items-center gap-2 text-2xl font-bold text-indigo-600" onclick="toggleMobileMenu()">
+        <i data-lucide="shield" class="w-6 h-6"></i>
+        <span>Admin Login</span>
+      </a>
       <a href="/auth/signup/farmer" class="text-2xl font-bold text-emerald-600" onclick="toggleMobileMenu()">Sign Up</a>
     <% } else { %>
       <a href="/auth/logout" class="text-2xl font-bold text-red-500" onclick="toggleMobileMenu()">Logout</a>

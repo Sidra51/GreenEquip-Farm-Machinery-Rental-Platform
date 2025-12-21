@@ -3,7 +3,11 @@ const express = require("express");
 const router = express.Router();
 const Listing = require("../models/Listing");
 const AdminListing = require("../models/AdminListing");
+const Booking = require("../models/Booking");
+const User = require("../models/User");
 const { verifyToken, requireAdmin } = require("../middleware/auth");
+const fs = require("fs");
+const path = require("path");
 
 // GET /admin - show all listings
 router.get("/", verifyToken, requireAdmin, async (req, res) => {
@@ -59,15 +63,17 @@ router.post("/decline/:id", verifyToken, requireAdmin, async (req, res) => {
   }
 });
 
-// POST /admin/delete/:id
-router.post("/delete/:id", verifyToken, requireAdmin, async (req, res) => {
+// POST /admin/delete/:id - NO AUTH REQUIRED
+router.post("/delete/:id", async (req, res) => {
   try {
     const listingId = req.params.id;
     console.log("Attempting to delete listing with ID:", listingId);
 
     // Find listing first
     const listing = await Listing.findById(listingId);
-    if (!listing) return res.status(404).send("Listing not found");
+    if (!listing) {
+      return res.status(404).json({ success: false, message: "Listing not found" });
+    }
 
     console.log("Found listing to delete:", {
       id: listing._id,
@@ -83,20 +89,18 @@ router.post("/delete/:id", verifyToken, requireAdmin, async (req, res) => {
     await AdminListing.deleteMany({ listing: mongoose.Types.ObjectId(listingId) });
     console.log("Deleted associated AdminListing entries for:", listingId);
 
+    // Delete associated Bookings to prevent farmer dashboard errors
+    const deletedBookings = await Booking.deleteMany({ listing: listingId });
+    console.log(`Deleted ${deletedBookings.deletedCount} bookings for listing:`, listingId);
+
     if (result) {
-      if (req.headers['content-type'] === 'application/json' || req.headers.accept?.includes('application/json')) {
-        return res.json({ success: true, message: "Listing deleted successfully" });
-      }
-     
+      return res.redirect('/admin');
     } else {
-      res.status(404).send("Listing not found");
+      return res.status(404).send("Listing not found");
     }
   } catch (error) {
     console.error("Error deleting listing:", error);
-    if (req.headers['content-type'] === 'application/json' || req.headers.accept?.includes('application/json')) {
-      return res.status(500).json({ success: false, message: "Error deleting listing" });
-    }
-    res.status(500).send("Error deleting listing");
+    return res.redirect('/admin');
   }
 });
 
@@ -133,6 +137,69 @@ router.post("/edit/:id", verifyToken, requireAdmin, async (req, res) => {
   } catch (error) {
     console.error("Error updating listing:", error);
     res.status(500).send("Error updating listing");
+  }
+});
+
+// GET /admin/analytics - show equipment utilization analytics - NO AUTH REQUIRED
+router.get("/analytics", async (req, res) => {
+  try {
+    // Get all listings
+    const listings = await Listing.find({ status: "approved" });
+    
+    // Get all bookings
+    const bookings = await Booking.find().populate('listing');
+    
+    // Calculate equipment utilization metrics
+    const equipmentData = listings.map(listing => {
+      // Find all bookings for this listing
+      const listingBookings = bookings.filter(booking => 
+        booking.listing && booking.listing._id.toString() === listing._id.toString()
+      );
+      
+      // Calculate total booked days
+      const totalBookedDays = listingBookings.reduce((sum, booking) => {
+        const days = Math.ceil((booking.to - booking.from) / (1000 * 60 * 60 * 24));
+        return sum + days;
+      }, 0);
+      
+      // Calculate utilization rate (assuming 30 days/month for simplicity)
+      const utilizationRate = Math.min(100, Math.round((totalBookedDays / 30) * 100));
+      
+      return {
+        id: listing._id,
+        name: listing.name,
+        category: listing.category,
+        pricePerDay: listing.pricePerDay,
+        totalBookedDays,
+        utilizationRate,
+        totalRevenue: listingBookings.reduce((sum, booking) => sum + booking.amount, 0),
+        bookingCount: listingBookings.length
+      };
+    });
+    
+    // Sort by utilization rate (highest first)
+    equipmentData.sort((a, b) => b.utilizationRate - a.utilizationRate);
+    
+    // Calculate overall statistics
+    const totalEquipment = listings.length;
+    const totalBookings = bookings.length;
+    const totalRevenue = bookings.reduce((sum, booking) => sum + booking.amount, 0);
+    
+    // Top performing equipment (by revenue)
+    const topEquipment = [...equipmentData]
+      .sort((a, b) => b.totalRevenue - a.totalRevenue)
+      .slice(0, 5);
+    
+    res.render("admin-analytics", { 
+      equipmentData,
+      totalEquipment,
+      totalBookings,
+      totalRevenue,
+      topEquipment
+    });
+  } catch (error) {
+    console.error("Error fetching analytics data:", error);
+    res.status(500).send("Error fetching analytics data");
   }
 });
 

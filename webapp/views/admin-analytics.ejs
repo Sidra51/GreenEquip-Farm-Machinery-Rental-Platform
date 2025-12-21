@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipment Utilization Analytics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/modern.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    
+    .utilization-high { background-color: #10B981; }
+    .utilization-medium { background-color: #F59E0B; }
+    .utilization-low { background-color: #EF4444; }
+    
+    .chart-bar {
+      transition: all 0.3s ease;
+    }
+    
+    .chart-bar:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="bg-emerald-100 p-2 rounded-xl">
+          <i data-lucide="bar-chart-3" class="w-6 h-6 text-emerald-600"></i>
+        </div>
+        <span class="text-xl font-bold text-gray-800">Analytics Dashboard</span>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <a href="/admin" class="flex items-center gap-2 text-gray-500 hover:text-emerald-500 transition font-medium">
+          <span>Admin Panel</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <a href="/auth/logout" class="flex items-center gap-2 text-gray-500 hover:text-red-500 transition font-medium">
+          <span class="hidden md:inline">Logout</span>
+          <i data-lucide="log-out" class="w-5 h-5"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Equipment Utilization Analytics</h1>
+      <p class="text-gray-600">Track and analyze equipment performance and utilization rates</p>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="glass rounded-2xl p-6 shadow-sm border border-white/50">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+            <i data-lucide="tractor" class="w-6 h-6 text-emerald-600"></i>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Total Equipment</p>
+            <p class="text-2xl font-bold text-gray-900"><%= totalEquipment %></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 shadow-sm border border-white/50">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+            <i data-lucide="calendar-check" class="w-6 h-6 text-blue-600"></i>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Total Bookings</p>
+            <p class="text-2xl font-bold text-gray-900"><%= totalBookings %></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass rounded-2xl p-6 shadow-sm border border-white/50">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+            <i data-lucide="indian-rupee" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500 mb-1">Total Revenue</p>
+            <p class="text-2xl font-bold text-gray-900">₹<%= totalRevenue.toLocaleString() %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Top Performing Equipment -->
+    <div class="glass rounded-2xl p-6 shadow-sm border border-white/50 mb-8">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Top Performing Equipment</h2>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <% topEquipment.forEach((item, index) => { %>
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="font-bold text-gray-900 text-sm"><%= item.name %></h3>
+              <span class="text-xs font-bold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md">₹<%= item.totalRevenue.toLocaleString() %></span>
+            </div>
+            <p class="text-xs text-gray-500 mb-3"><%= item.category %></p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-500"><%= item.bookingCount %> bookings</span>
+              <span class="text-xs font-bold text-emerald-600"><%= item.utilizationRate %>%</span>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+    
+    <!-- Utilization Chart -->
+    <div class="glass rounded-2xl p-6 shadow-sm border border-white/50 mb-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Equipment Utilization Rates</h2>
+        <div class="flex gap-2">
+          <span class="text-xs flex items-center gap-1">
+            <span class="w-3 h-3 bg-green-500 rounded-sm"></span> High (>70%)
+          </span>
+          <span class="text-xs flex items-center gap-1">
+            <span class="w-3 h-3 bg-yellow-500 rounded-sm"></span> Medium (30-70%)
+          </span>
+          <span class="text-xs flex items-center gap-1">
+            <span class="w-3 h-3 bg-red-500 rounded-sm"></span> Low (<30%)
+          </span>
+        </div>
+      </div>
+      
+      <div class="space-y-4">
+        <% equipmentData.slice(0, 10).forEach(item => { %>
+          <div class="flex items-center gap-4">
+            <div class="w-32 text-sm font-medium text-gray-700 truncate"><%= item.name %></div>
+            <div class="flex-1 flex items-center gap-3">
+              <div class="flex-1 h-6 rounded-md overflow-hidden bg-gray-100">
+                <div 
+                  class="chart-bar h-full rounded-md <%= 
+                    item.utilizationRate > 70 ? 'utilization-high' : 
+                    item.utilizationRate > 30 ? 'utilization-medium' : 'utilization-low' 
+                  %>"
+                  style="width: <%= Math.min(100, item.utilizationRate) %>%;"
+                ></div>
+              </div>
+              <div class="w-12 text-sm font-bold text-gray-900"><%= item.utilizationRate %>%</div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+    
+    <!-- Detailed Equipment Data Table -->
+    <div class="glass rounded-2xl p-6 shadow-sm border border-white/50">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Detailed Equipment Utilization</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50 border-b border-gray-100">
+            <tr>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Equipment</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Price/Day</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Booked Days</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Bookings</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Revenue</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Utilization</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <% equipmentData.forEach(item => { %>
+              <tr class="hover:bg-gray-50/50 transition">
+                <td class="px-4 py-3">
+                  <div class="font-medium text-gray-900"><%= item.name %></div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-500"><%= item.category %></td>
+                <td class="px-4 py-3 text-sm font-medium text-gray-900">₹<%= item.pricePerDay %></td>
+                <td class="px-4 py-3 text-sm text-gray-500"><%= item.totalBookedDays %> days</td>
+                <td class="px-4 py-3 text-sm text-gray-500"><%= item.bookingCount %></td>
+                <td class="px-4 py-3 text-sm font-medium text-gray-900">₹<%= item.totalRevenue.toLocaleString() %></td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-16 h-2 rounded-full bg-gray-100 overflow-hidden">
+                      <div 
+                        class="h-full <%= 
+                          item.utilizationRate > 70 ? 'bg-green-500' : 
+                          item.utilizationRate > 30 ? 'bg-yellow-500' : 'bg-red-500' 
+                        %>"
+                        style="width: <%= Math.min(100, item.utilizationRate) %>%;"
+                      ></div>
+                    </div>
+                    <span class="text-sm font-bold <%= 
+                      item.utilizationRate > 70 ? 'text-green-600' : 
+                      item.utilizationRate > 30 ? 'text-yellow-600' : 'text-red-600' 
+                    %>"><%= item.utilizationRate %>%</span>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

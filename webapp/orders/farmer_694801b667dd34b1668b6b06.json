@@ -1,0 +1,20 @@
+[
+  {
+    "bookingId": "694801ef67dd34b1668b6b10",
+    "txHash": "0xb1aa3fb97176f57d530573511327bd8d1353dbef88e09ba9e6850677fc190bb1",
+    "amount": 4600,
+    "days": 2,
+    "listingId": 7,
+    "listingName": "tractor",
+    "createdAt": "2025-12-21T14:20:04.554Z"
+  },
+  {
+    "bookingId": "6948078b67dd34b1668b6b56",
+    "txHash": "0x401ebd78f2dabe2a4b2f4602eddc34abcdb413cc4cf5423bad971069c14b7ef7",
+    "amount": 2097,
+    "days": 3,
+    "listingId": 5,
+    "listingName": "harvestor",
+    "createdAt": "2025-12-21T14:44:08.455Z"
+  }
+]
