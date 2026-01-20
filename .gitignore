@@ -38,6 +38,12 @@ webapp/public/uploads/*
 webapp/training_data/
 webapp/image_classifier_model.h5  # This is a large model file that can be regenerated
 
+# Large image files
+webapp/pics/
+
+# Build artifacts
+webapp/artifacts/
+
 # Local config files
 config.local.js
 *.local.json
