@@ -1,115 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-</head>
-<body class="bg-gray-100 min-h-screen">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto p-6">
+      <!-- Header with Analytics and Logout buttons -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-emerald-700">Admin Dashboard</h1>
+        <div class="flex items-center gap-3">
+          <a
+            href="/admin/analytics"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+          >
+            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            <span>Analytics</span>
+          </a>
+          <a
+            href="/auth/logout"
+            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+          >
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
 
-<div class="container mx-auto p-6">
-  
-  <!-- Header with Analytics and Logout buttons -->
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-emerald-700">Admin Dashboard</h1>
-    <div class="flex items-center gap-3">
-      <a href="/admin/analytics" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
-        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-        <span>Analytics</span>
-      </a>
-      <a href="/auth/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
-        <i data-lucide="log-out" class="w-5 h-5"></i>
-        <span>Logout</span>
-      </a>
-    </div>
-  </div>
+      <!-- Success/Error Messages -->
+      <div id="message" class="hidden mb-4 p-4 rounded"></div>
 
-  <!-- Success/Error Messages -->
-  <div id="message" class="hidden mb-4 p-4 rounded"></div>
-
-  <section class="mb-10">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Pending Listings</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <% if (pending.length > 0) { %>
-        <% pending.forEach(l => { %>
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          Pending Listings
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <% if (pending.length > 0) { %> <% pending.forEach(l => { %>
           <div class="bg-white p-4 rounded shadow flex flex-col">
-            <img src="<%= l.img || 'https://via.placeholder.com/150' %>" class="w-full h-40 object-cover rounded mb-2">
+            <div class="relative">
+              <img
+                src="<%= l.img || 'https://via.placeholder.com/150' %>"
+                class="w-full h-40 object-cover rounded mb-2"
+              />
+              <% if (l.imageVerification && l.imageVerification.status ===
+              'flagged') { %>
+              <div
+                class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Suspicious Image
+              </div>
+              <% } else if (l.imageVerification && l.imageVerification.status
+              === 'verified') { %>
+              <div
+                class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Verified
+              </div>
+              <% } %>
+            </div>
             <h3 class="font-bold text-lg text-gray-700 mb-1"><%= l.name %></h3>
-            <p class="text-sm text-gray-500 mb-1"><%= l.category %> • <%= l.region %></p>
-            <p class="text-sm text-gray-600 font-medium mb-2">₹<%= l.pricePerDay %>/day</p>
+            <p class="text-sm text-gray-500 mb-1">
+              <%= l.category %> • <%= l.region %>
+            </p>
+            <p class="text-sm text-gray-600 font-medium mb-2">
+              ₹<%= l.pricePerDay %>/day
+            </p>
             <div class="flex gap-2 mt-auto">
               <form method="POST" action="/admin/approve/<%= l._id %>">
-                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Approve</button>
+                <button
+                  class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
+                >
+                  Approve
+                </button>
               </form>
               <form method="POST" action="/admin/decline/<%= l._id %>">
-                <button class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded">Decline</button>
+                <button
+                  class="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded"
+                >
+                  Decline
+                </button>
               </form>
             </div>
           </div>
-        <% }) %>
-      <% } else { %>
-        <p class="col-span-full text-gray-500 text-center">No pending listings.</p>
-      <% } %>
-    </div>
-  </section>
+          <% }) %> <% } else { %>
+          <p class="col-span-full text-gray-500 text-center">
+            No pending listings.
+          </p>
+          <% } %>
+        </div>
+      </section>
 
-  <section class="mb-10">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Approved Listings</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <% if (approved.length > 0) { %>
-        <% approved.forEach(l => { %>
-          <div class="bg-white p-4 rounded shadow flex flex-col" id="listing-<%= l._id %>">
-            <img src="<%= l.img || 'https://via.placeholder.com/150' %>" class="w-full h-40 object-cover rounded mb-2">
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          Approved Listings
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <% if (approved.length > 0) { %> <% approved.forEach(l => { %>
+          <div
+            class="bg-white p-4 rounded shadow flex flex-col"
+            id="listing-<%= l._id %>"
+          >
+            <div class="relative">
+              <img
+                src="<%= l.img || 'https://via.placeholder.com/150' %>"
+                class="w-full h-40 object-cover rounded mb-2"
+              />
+              <% if (l.imageVerification && l.imageVerification.status ===
+              'flagged') { %>
+              <div
+                class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Suspicious Image
+              </div>
+              <% } else if (l.imageVerification && l.imageVerification.status
+              === 'verified') { %>
+              <div
+                class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Verified
+              </div>
+              <% } %>
+            </div>
             <h3 class="font-bold text-lg text-gray-700 mb-1"><%= l.name %></h3>
-            <p class="text-sm text-gray-500 mb-1"><%= l.category %> • <%= l.region %></p>
-            <p class="text-sm text-gray-600 font-medium mb-2">₹<%= l.pricePerDay %>/day</p>
+            <p class="text-sm text-gray-500 mb-1">
+              <%= l.category %> • <%= l.region %>
+            </p>
+            <p class="text-sm text-gray-600 font-medium mb-2">
+              ₹<%= l.pricePerDay %>/day
+            </p>
             <div class="flex gap-2 mt-auto">
               <form method="GET" action="/admin/edit/<%= l._id %>">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Edit</button>
+                <button
+                  class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+                >
+                  Edit
+                </button>
               </form>
-              <form method="POST" action="/admin/delete/<%= l._id %>" onsubmit="return confirm('Are you sure you want to delete this listing?')">
-                <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Delete</button>
+              <form
+                method="POST"
+                action="/admin/delete/<%= l._id %>"
+                onsubmit="return confirm('Are you sure you want to delete this listing?')"
+              >
+                <button
+                  class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                >
+                  Delete
+                </button>
               </form>
             </div>
           </div>
-        <% }) %>
-      <% } else { %>
-        <p class="col-span-full text-gray-500 text-center">No approved listings.</p>
-      <% } %>
-    </div>
-  </section>
+          <% }) %> <% } else { %>
+          <p class="col-span-full text-gray-500 text-center">
+            No approved listings.
+          </p>
+          <% } %>
+        </div>
+      </section>
 
-  <section class="mb-10">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Declined Listings</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <% if (declined.length > 0) { %>
-        <% declined.forEach(l => { %>
-          <div class="bg-white p-4 rounded shadow flex flex-col" id="listing-<%= l._id %>">
-            <img src="<%= l.img || 'https://via.placeholder.com/150' %>" class="w-full h-40 object-cover rounded mb-2">
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          Declined Listings
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <% if (declined.length > 0) { %> <% declined.forEach(l => { %>
+          <div
+            class="bg-white p-4 rounded shadow flex flex-col"
+            id="listing-<%= l._id %>"
+          >
+            <div class="relative">
+              <img
+                src="<%= l.img || 'https://via.placeholder.com/150' %>"
+                class="w-full h-40 object-cover rounded mb-2"
+              />
+              <% if (l.imageVerification && l.imageVerification.status ===
+              'flagged') { %>
+              <div
+                class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Suspicious Image
+              </div>
+              <% } else if (l.imageVerification && l.imageVerification.status
+              === 'verified') { %>
+              <div
+                class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Verified
+              </div>
+              <% } %>
+            </div>
             <h3 class="font-bold text-lg text-gray-700 mb-1"><%= l.name %></h3>
-            <p class="text-sm text-gray-500 mb-1"><%= l.category %> • <%= l.region %></p>
-            <p class="text-sm text-gray-600 font-medium mb-2">₹<%= l.pricePerDay %>/day</p>
-            <form method="POST" action="/admin/delete/<%= l._id %>" onsubmit="return confirm('Are you sure you want to delete this listing?')">
-              <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Delete</button>
+            <p class="text-sm text-gray-500 mb-1">
+              <%= l.category %> • <%= l.region %>
+            </p>
+            <p class="text-sm text-gray-600 font-medium mb-2">
+              ₹<%= l.pricePerDay %>/day
+            </p>
+            <form
+              method="POST"
+              action="/admin/delete/<%= l._id %>"
+              onsubmit="return confirm('Are you sure you want to delete this listing?')"
+            >
+              <button
+                class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+              >
+                Delete
+              </button>
             </form>
           </div>
-        <% }) %>
-      <% } else { %>
-        <p class="col-span-full text-gray-500 text-center">No declined listings.</p>
-      <% } %>
+          <% }) %> <% } else { %>
+          <p class="col-span-full text-gray-500 text-center">
+            No declined listings.
+          </p>
+          <% } %>
+        </div>
+      </section>
     </div>
-  </section>
 
-</div>
-
-<script>
-  // Initialize Lucide icons
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
-</script>
-
-</body>
+    <script>
+      // Initialize Lucide icons
+      if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+      }
+    </script>
+  </body>
 </html>

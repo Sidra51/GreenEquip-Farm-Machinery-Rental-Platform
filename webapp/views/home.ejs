@@ -1,278 +1,482 @@
 <!DOCTYPE html>
 <html lang="en" id="html">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenEquip - Empowering Farmers</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/css/modern.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-</head>
-<body class="bg-gray-50">
-
-  <!-- Navbar -->
-  <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 px-4 bg-white/80 backdrop-blur-md border-b border-gray-200">
-    <div class="container mx-auto flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <div class="bg-gradient-to-br from-emerald-500 to-lime-500 p-2 rounded-xl">
-          <i data-lucide="sprout" class="w-6 h-6 text-white"></i>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GreenEquip - Empowering Farmers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/modern.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="/js/translation.js"></script>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 transition-all duration-300 py-4 px-4 bg-white/80 backdrop-blur-md border-b border-gray-200"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <div
+            class="bg-gradient-to-br from-emerald-500 to-lime-500 p-2 rounded-xl"
+          >
+            <i data-lucide="sprout" class="w-6 h-6 text-white"></i>
+          </div>
+          <span
+            class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-800 to-emerald-600"
+            >GreenEquip</span
+          >
         </div>
-        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-800 to-emerald-600">GreenEquip</span>
-      </div>
-      
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#features" class="text-gray-600 hover:text-emerald-600 font-medium transition">Features</a>
-        <a href="#testimonials" class="text-gray-600 hover:text-emerald-600 font-medium transition">Stories</a>
-      </div>
 
-      <div class="hidden md:flex items-center gap-4">
-        <% if (typeof user !== 'undefined' && user) { %>
-          <span class="text-gray-600 font-medium">Welcome, <%= user.name %></span>
-          <a href="/auth/logout" class="text-red-500 font-medium hover:text-red-600 transition">Logout</a>
-        <% } else { %>
-          <a href="/auth/login/farmer" class="text-emerald-600 font-bold hover:text-emerald-700 transition">Login</a>
-          <a href="/auth/login/admin" class="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl font-bold transition shadow-lg shadow-indigo-200 hover:shadow-indigo-300">
+        <div class="hidden md:flex items-center gap-8">
+          <a
+            href="#features"
+            class="text-gray-600 hover:text-emerald-600 font-medium transition"
+            >Features</a
+          >
+          <a
+            href="#testimonials"
+            class="text-gray-600 hover:text-emerald-600 font-medium transition"
+            >Stories</a
+          >
+        </div>
+
+        <div class="hidden md:flex items-center gap-4">
+          <!-- Translation Button -->
+          <button
+            id="translateBtn"
+            class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg transition-colors"
+            onclick="toggleLanguage()"
+          >
+            <i class="mr-2">🌐</i>
+            <span id="translateText">Translate to Hindi</span>
+          </button>
+
+          <% if (typeof user !== 'undefined' && user) { %>
+          <span class="text-gray-600 font-medium"
+            >Welcome, <%= user.name %></span
+          >
+          <a
+            href="/auth/logout"
+            class="text-red-500 font-medium hover:text-red-600 transition"
+            >Logout</a
+          >
+          <% } else { %>
+          <a
+            href="/auth/login/admin"
+            class="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl font-bold transition shadow-lg shadow-indigo-200 hover:shadow-indigo-300"
+          >
             <i data-lucide="shield" class="w-4 h-4"></i>
             <span>Admin</span>
           </a>
-          <a href="/auth/signup/farmer" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl font-bold transition shadow-lg shadow-emerald-200 hover:shadow-emerald-300">Sign Up</a>
-        <% } %>
+          <% } %>
+        </div>
+
+        <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+          <i data-lucide="menu" class="w-6 h-6 text-gray-800"></i>
+        </button>
       </div>
+    </nav>
 
-      <button class="md:hidden p-2" onclick="toggleMobileMenu()">
-        <i data-lucide="menu" class="w-6 h-6 text-gray-800"></i>
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center justify-center gap-8"
+    >
+      <button class="absolute top-6 right-6 p-2" onclick="toggleMobileMenu()">
+        <i data-lucide="x" class="w-8 h-8 text-gray-600"></i>
       </button>
-    </div>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center justify-center gap-8">
-    <button class="absolute top-6 right-6 p-2" onclick="toggleMobileMenu()">
-      <i data-lucide="x" class="w-8 h-8 text-gray-600"></i>
-    </button>
-    <a href="#features" class="text-2xl font-bold text-gray-800" onclick="toggleMobileMenu()">Features</a>
-    <a href="#testimonials" class="text-2xl font-bold text-gray-800" onclick="toggleMobileMenu()">Stories</a>
-    <% if (typeof user === 'undefined' || !user) { %>
-      <a href="/auth/login/farmer" class="text-2xl font-bold text-emerald-600" onclick="toggleMobileMenu()">Login</a>
-      <a href="/auth/login/admin" class="flex items-center gap-2 text-2xl font-bold text-indigo-600" onclick="toggleMobileMenu()">
+      <a
+        href="#features"
+        class="text-2xl font-bold text-gray-800"
+        onclick="toggleMobileMenu()"
+        >Features</a
+      >
+      <a
+        href="#testimonials"
+        class="text-2xl font-bold text-gray-800"
+        onclick="toggleMobileMenu()"
+        >Stories</a
+      >
+      <% if (typeof user !== 'undefined' && user) { %>
+      <a
+        href="/auth/logout"
+        class="text-2xl font-bold text-red-500"
+        onclick="toggleMobileMenu()"
+        >Logout</a
+      >
+      <% } else { %>
+      <a
+        href="/auth/login/admin"
+        class="flex items-center gap-2 text-2xl font-bold text-indigo-600"
+        onclick="toggleMobileMenu()"
+      >
         <i data-lucide="shield" class="w-6 h-6"></i>
         <span>Admin Login</span>
       </a>
-      <a href="/auth/signup/farmer" class="text-2xl font-bold text-emerald-600" onclick="toggleMobileMenu()">Sign Up</a>
-    <% } else { %>
-      <a href="/auth/logout" class="text-2xl font-bold text-red-500" onclick="toggleMobileMenu()">Logout</a>
-    <% } %>
-  </div>
-
-  <!-- Hero Section -->
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-    <!-- Background Image -->
-    <div class="absolute inset-0 z-0">
-      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2070&auto=format&fit=crop" alt="Farm" class="w-full h-full object-cover">
-      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-emerald-900/90"></div>
+      <% } %>
     </div>
 
-    <div class="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-12 items-center">
-      <div class="text-white space-y-8 animate-fade-in-up">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-100 text-sm font-medium">
-          <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
-          <span>The Future of Farming is Here</span>
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl font-bold leading-tight">
-          Smart Farming for a <span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400">Better Future</span>
-        </h1>
-        
-        <p class="text-xl text-gray-200 max-w-lg leading-relaxed">
-          Rent advanced equipment, connect with verified sellers, and use AI to optimize your harvest.
-        </p>
+    <!-- Hero Section -->
+    <section
+      class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+    >
+      <!-- Background Image -->
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2070&auto=format&fit=crop"
+          alt="Farm"
+          class="w-full h-full object-cover"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-emerald-900/90"
+        ></div>
+      </div>
 
-        <div class="flex flex-wrap gap-4 pt-4">
-          <% if (typeof user !== 'undefined' && user) { %>
-            <% if (user.role === "farmer") { %>
-              <a href="/farmer" class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
-                Go to Dashboard <i data-lucide="arrow-right" class="w-5 h-5"></i>
-              </a>
+      <div
+        class="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-12 items-center"
+      >
+        <div class="text-white space-y-8 animate-fade-in-up">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-100 text-sm font-medium"
+          >
+            <span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+            <span>The Future of Farming is Here</span>
+          </div>
+
+          <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+            Smart Farming for a
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400"
+              >Better Future</span
+            >
+          </h1>
+
+          <p class="text-xl text-gray-200 max-w-lg leading-relaxed">
+            Rent advanced equipment, connect with verified sellers, and use AI
+            to optimize your harvest.
+          </p>
+
+          <div class="flex flex-wrap gap-4 pt-4">
+            <% if (typeof user !== 'undefined' && user) { %> <% if (user.role
+            === "farmer") { %>
+            <a
+              href="/farmer"
+              class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2"
+            >
+              Go to Dashboard <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
             <% } else { %>
-              <a href="/seller" class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
-                Go to Dashboard <i data-lucide="arrow-right" class="w-5 h-5"></i>
-              </a>
-            <% } %>
-          <% } else { %>
-            <a href="/auth/signup/farmer" class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
+            <a
+              href="/seller"
+              class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2"
+            >
+              Go to Dashboard <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+            <% } %> <% } else { %>
+            <a
+              href="/auth/signup/farmer"
+              class="bg-lime-500 hover:bg-lime-400 text-emerald-900 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2"
+            >
               Join as Farmer <i data-lucide="tractor" class="w-5 h-5"></i>
             </a>
-            <a href="/auth/signup/seller" class="glass text-white hover:bg-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2">
+            <a
+              href="/auth/signup/seller"
+              class="glass text-white hover:bg-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition hover-lift flex items-center gap-2"
+            >
               Join as Seller <i data-lucide="store" class="w-5 h-5"></i>
             </a>
-          <% } %>
+            <% } %>
+          </div>
         </div>
-      </div>
 
-      <!-- Hero Card -->
-      <div class="hidden md:block animate-fade-in-up delay-200">
-        <div class="glass p-8 rounded-3xl transform rotate-2 hover:rotate-0 transition duration-500">
-          <div class="flex justify-between items-start mb-6">
-            <div>
-              <p class="text-sm text-gray-500 font-medium mb-1">Recommended for you</p>
-              <h3 class="text-2xl font-bold text-gray-800">John Deere 5310</h3>
+        <!-- Hero Card -->
+        <div class="hidden md:block animate-fade-in-up delay-200">
+          <div
+            class="glass p-8 rounded-3xl transform rotate-2 hover:rotate-0 transition duration-500"
+          >
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <p class="text-sm text-gray-500 font-medium mb-1">
+                  Recommended for you
+                </p>
+                <h3 class="text-2xl font-bold text-gray-800">
+                  John Deere 5310
+                </h3>
+              </div>
+              <span
+                class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-bold"
+                >Available</span
+              >
             </div>
-            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-bold">Available</span>
-          </div>
-          <img src="/images/green-new-tractor.jpg" alt="Tractor" class="w-full h-48 object-cover rounded-xl mb-6 shadow-md">
-          <div class="flex justify-between items-center">
-            <div>
-              <p class="text-sm text-gray-500">Daily Rate</p>
-              <p class="text-2xl font-bold text-emerald-600">₹2,500</p>
-            </div>
-            <button class="bg-gray-900 text-white p-3 rounded-xl hover:bg-gray-800 transition">
-              <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Wave Separator -->
-    <div class="absolute bottom-0 left-0 right-0">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto text-emerald-50 fill-current">
-        <path fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-      </svg>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section id="features" class="py-24 bg-emerald-50 relative">
-    <div class="container mx-auto px-4">
-      <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-        <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm">Why Choose Us</span>
-        <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-6 text-gray-900">Everything you need to grow</h2>
-        <p class="text-xl text-gray-600">We combine traditional farming wisdom with cutting-edge technology.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Feature 1 -->
-        <div class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-100">
-          <div class="w-14 h-14 bg-lime-100 rounded-2xl flex items-center justify-center mb-6 text-lime-600">
-            <i data-lucide="tractor" class="w-8 h-8"></i>
-          </div>
-          <h3 class="text-2xl font-bold mb-4 text-gray-800">Easy Rentals</h3>
-          <p class="text-gray-600 leading-relaxed">Browse hundreds of verified equipment listings. Book instantly with transparent pricing.</p>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-200 border-emerald-200 bg-emerald-50/50">
-          <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 text-emerald-600">
-            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
-          </div>
-          <h3 class="text-2xl font-bold mb-4 text-gray-800">AI Recommendations</h3>
-          <p class="text-gray-600 leading-relaxed">Our smart AI analyzes your soil and crop data to suggest the perfect machinery.</p>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-300">
-          <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-600">
-            <i data-lucide="shield-check" class="w-8 h-8"></i>
-          </div>
-          <h3 class="text-2xl font-bold mb-4 text-gray-800">Secure Blockchain</h3>
-          <p class="text-gray-600 leading-relaxed">Every transaction is recorded on the blockchain for 100% transparency and security.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials" class="py-24 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-16 text-gray-900">Trusted by Farmers</h2>
-      
-      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <div class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-gray-100">
-          <div class="flex items-center gap-4 mb-6">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Farmer" class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-md">
-            <div>
-              <h4 class="font-bold text-lg text-gray-900">Rajesh Patil</h4>
-              <p class="text-emerald-600 text-sm font-medium">Maharashtra</p>
+            <img
+              src="/images/green-new-tractor.jpg"
+              alt="Tractor"
+              class="w-full h-48 object-cover rounded-xl mb-6 shadow-md"
+            />
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-sm text-gray-500">Daily Rate</p>
+                <p class="text-2xl font-bold text-emerald-600">₹2,500</p>
+              </div>
+              <button
+                class="bg-gray-900 text-white p-3 rounded-xl hover:bg-gray-800 transition"
+              >
+                <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+              </button>
             </div>
           </div>
-          <p class="text-gray-600 italic text-lg">"GreenEquip transformed how I manage my harvest. The equipment quality is top-notch."</p>
+        </div>
+      </div>
+
+      <!-- Wave Separator -->
+      <div class="absolute bottom-0 left-0 right-0">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+          class="w-full h-auto text-emerald-50 fill-current"
+        >
+          <path
+            fill-opacity="1"
+            d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-emerald-50 relative">
+      <div class="container mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+          <span
+            class="text-emerald-600 font-bold tracking-wider uppercase text-sm"
+            >Why Choose Us</span
+          >
+          <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-6 text-gray-900">
+            Everything you need to grow
+          </h2>
+          <p class="text-xl text-gray-600">
+            We combine traditional farming wisdom with cutting-edge technology.
+          </p>
         </div>
 
-        <div class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-gray-100">
-          <div class="flex items-center gap-4 mb-6">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Farmer" class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-md">
-            <div>
-              <h4 class="font-bold text-lg text-gray-900">Sunita Deshmukh</h4>
-              <p class="text-emerald-600 text-sm font-medium">Karnataka</p>
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Feature 1 -->
+          <div
+            class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-100"
+          >
+            <div
+              class="w-14 h-14 bg-lime-100 rounded-2xl flex items-center justify-center mb-6 text-lime-600"
+            >
+              <i data-lucide="tractor" class="w-8 h-8"></i>
             </div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">Easy Rentals</h3>
+            <p class="text-gray-600 leading-relaxed">
+              Browse hundreds of verified equipment listings. Book instantly
+              with transparent pricing.
+            </p>
           </div>
-          <p class="text-gray-600 italic text-lg">"Renting out my tractor when I don't use it has given me a great extra income."</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-16 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-lime-500"></div>
-    <div class="container mx-auto px-4 relative z-10">
-      <div class="grid md:grid-cols-4 gap-12 mb-12">
-        <div class="col-span-1 md:col-span-2">
-          <div class="flex items-center gap-2 mb-6">
-            <i data-lucide="sprout" class="w-8 h-8 text-lime-400"></i>
-            <span class="text-3xl font-bold">GreenEquip</span>
+          <!-- Feature 3 -->
+          <div
+            class="glass p-8 rounded-3xl hover-lift animate-fade-in-up delay-300"
+          >
+            <div
+              class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-600"
+            >
+              <i data-lucide="shield-check" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">
+              Secure Blockchain
+            </h3>
+            <p class="text-gray-600 leading-relaxed">
+              Every transaction is recorded on the blockchain for 100%
+              transparency and security.
+            </p>
           </div>
-          <p class="text-gray-400 max-w-sm leading-relaxed">Empowering agriculture through technology. We are committed to helping farmers prosper with sustainable solutions.</p>
-        </div>
-        <div>
-          <h4 class="font-bold text-lg mb-6 text-white">Platform</h4>
-          <ul class="space-y-4 text-gray-400">
-            <li><a href="#" class="hover:text-lime-400 transition">About Us</a></li>
-            <li><a href="#" class="hover:text-lime-400 transition">How it Works</a></li>
-            <li><a href="#" class="hover:text-lime-400 transition">Pricing</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-lg mb-6 text-white">Support</h4>
-          <ul class="space-y-4 text-gray-400">
-            <li><a href="#" class="hover:text-lime-400 transition">Help Center</a></li>
-            <li><a href="#" class="hover:text-lime-400 transition">Contact Us</a></li>
-            <li><a href="#" class="hover:text-lime-400 transition">Privacy Policy</a></li>
-          </ul>
         </div>
       </div>
-      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-gray-500">© 2024 GreenEquip. All Rights Reserved.</p>
-        <div class="flex gap-6">
-          <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-          <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-          <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-24 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-16 text-gray-900">
+          Trusted by Farmers
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div
+            class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-gray-100"
+          >
+            <div class="flex items-center gap-4 mb-6">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Farmer"
+                class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-md"
+              />
+              <div>
+                <h4 class="font-bold text-lg text-gray-900">Rajesh Patil</h4>
+                <p class="text-emerald-600 text-sm font-medium">Maharashtra</p>
+              </div>
+            </div>
+            <p class="text-gray-600 italic text-lg">
+              "GreenEquip transformed how I manage my harvest. The equipment
+              quality is top-notch."
+            </p>
+          </div>
+
+          <div
+            class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-gray-100"
+          >
+            <div class="flex items-center gap-4 mb-6">
+              <img
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt="Farmer"
+                class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-md"
+              />
+              <div>
+                <h4 class="font-bold text-lg text-gray-900">Sunita Deshmukh</h4>
+                <p class="text-emerald-600 text-sm font-medium">Karnataka</p>
+              </div>
+            </div>
+            <p class="text-gray-600 italic text-lg">
+              "Renting out my tractor when I don't use it has given me a great
+              extra income."
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16 relative overflow-hidden">
+      <div
+        class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-lime-500"
+      ></div>
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+          <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center gap-2 mb-6">
+              <i data-lucide="sprout" class="w-8 h-8 text-lime-400"></i>
+              <span class="text-3xl font-bold">GreenEquip</span>
+            </div>
+            <p class="text-gray-400 max-w-sm leading-relaxed">
+              Empowering agriculture through technology. We are committed to
+              helping farmers prosper with sustainable solutions.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-6 text-white">Platform</h4>
+            <ul class="space-y-4 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-lime-400 transition">About Us</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-lime-400 transition"
+                  >How it Works</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-lime-400 transition">Pricing</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-6 text-white">Support</h4>
+            <ul class="space-y-4 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-lime-400 transition"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-lime-400 transition"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-lime-400 transition"
+                  >Privacy Policy</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <p class="text-gray-500">© 2024 GreenEquip. All Rights Reserved.</p>
+          <div class="flex gap-6">
+            <a href="#" class="text-gray-500 hover:text-white transition"
+              ><i data-lucide="twitter" class="w-5 h-5"></i
+            ></a>
+            <a href="#" class="text-gray-500 hover:text-white transition"
+              ><i data-lucide="facebook" class="w-5 h-5"></i
+            ></a>
+            <a href="#" class="text-gray-500 hover:text-white transition"
+              ><i data-lucide="instagram" class="w-5 h-5"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-  <script>
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
-    
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('translate-x-full');
-    }
-
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        nav.classList.add('py-0');
-      } else {
-        nav.classList.remove('py-0');
+    <script>
+      if (typeof lucide !== "undefined") {
+        lucide.createIcons();
       }
-    });
-    
-  </script>
-</body>
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("translate-x-full");
+      }
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", () => {
+        const nav = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          nav.classList.add("py-0");
+        } else {
+          nav.classList.remove("py-0");
+        }
+      });
+    </script>
+
+    <script>
+      // Update button text based on translation state
+      function updateTranslationButton() {
+        const translateBtn = document.getElementById("translateBtn");
+        const translateText = document.getElementById("translateText");
+
+        if (window.hindiTranslator && window.hindiTranslator.isHindi) {
+          translateText.textContent = "Translate to English";
+        } else {
+          translateText.textContent = "Translate to Hindi";
+        }
+      }
+
+      // Listen for translation events to update button text
+      if (window.hindiTranslator) {
+        // Override the translation methods to update UI
+        const originalToggle = window.toggleLanguage;
+        window.toggleLanguage = function () {
+          originalToggle();
+          setTimeout(updateTranslationButton, 100);
+        };
+
+        const originalTranslateToHindi = window.translateToHindi;
+        window.translateToHindi = function () {
+          originalTranslateToHindi();
+          setTimeout(updateTranslationButton, 100);
+        };
+
+        const originalTranslateToEnglish = window.translateToEnglish;
+        window.translateToEnglish = function () {
+          originalTranslateToEnglish();
+          setTimeout(updateTranslationButton, 100);
+        };
+      }
+    </script>
+  </body>
 </html>

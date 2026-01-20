@@ -1,9 +1,58 @@
+# Dependencies
 node_modules/
-.env
-.DS_Store
 __pycache__/
 *.pyc
-artifacts/
-cache/
-database.db
-webapp/node_modules/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# Environment specific
+.env
+.env.local
+.env.production
+.env.development
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# User uploads and training data (these are large files that don't need to be in git)
+webapp/public/uploads/*
+webapp/training_data/
+webapp/image_classifier_model.h5  # This is a large model file that can be regenerated
+
+# Local config files
+config.local.js
+*.local.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Browser extensions
+*.crx
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp

@@ -7,12 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/modern.css" />
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="/js/translation.js"></script>
   </head>
   <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
     <div
       class="fixed inset-0 bg-gradient-to-br from-emerald-50 to-green-50 -z-10"
     ></div>
     <div class="max-w-4xl w-full mx-auto">
+      <!-- Translation Button -->
+      <div class="mb-6 flex justify-end">
+        <button
+          id="translateBtn"
+          onclick="toggleLanguage()"
+          class="flex items-center gap-2 text-gray-500 hover:text-blue-500 transition font-medium"
+          aria-label="Toggle Language"
+        >
+          <i data-lucide="globe" class="w-5 h-5"></i>
+          <span id="translateBtnText">Translate</span>
+        </button>
+      </div>
       <!-- Order Summary Card -->
       <div class="glass p-8 rounded-3xl h-fit mb-8">
         <h2
@@ -225,6 +238,39 @@
 
         // Call the existing logic
         payWithMethod('upi', '<%= bookingId %>', <%= amount %>, <%= days %>, <%= listing.onChainId %>);
+      });
+    </script>
+
+    <script>
+      // Update translation button text based on current language
+      function updateTranslationButtonText() {
+        const btn = document.getElementById("translateBtnText");
+        if (btn) {
+          if (window.hindiTranslator && window.hindiTranslator.isHindi) {
+            btn.textContent = "English";
+          } else {
+            btn.textContent = "हिंदी";
+          }
+        }
+      }
+
+      // Listen for language changes
+      const originalTranslateToHindi = window.translateToHindi;
+      const originalTranslateToEnglish = window.translateToEnglish;
+
+      window.translateToHindi = function () {
+        originalTranslateToHindi();
+        setTimeout(updateTranslationButtonText, 100);
+      };
+
+      window.translateToEnglish = function () {
+        originalTranslateToEnglish();
+        setTimeout(updateTranslationButtonText, 100);
+      };
+
+      // Initialize button text when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        updateTranslationButtonText();
       });
     </script>
   </body>

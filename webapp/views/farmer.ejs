@@ -21,14 +21,26 @@
         <div class="bg-emerald-100 p-2 rounded-xl">
           <i data-lucide="tractor" class="w-6 h-6 text-emerald-600"></i>
         </div>
-        <span class="text-xl font-bold text-gray-800" data-en="Farmer Portal" data-mr="शेतकरी पोर्टल">Farmer Portal</span>
+        <span class="text-xl font-bold text-gray-800" data-en="Farmer Portal" data-mr="शेतकरी पोर्टल" data-hi="किसान पोर्टल">Farmer Portal</span>
       </div>
       
       <div class="flex items-center gap-4">
         <div class="hidden md:flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-full">
           <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-emerald-700" data-en="Live Market" data-mr="थेट बाजार">Live Market</span>
+          <span class="text-sm font-medium text-emerald-700" data-en="Live Market" data-mr="थेट बाजार" data-hi="लाइव बाजार">Live Market</span>
         </div>
+            
+        <!-- Translation Button -->
+        <button 
+          id="translateBtn" 
+          onclick="toggleLanguage()" 
+          class="flex items-center gap-2 text-gray-500 hover:text-blue-500 transition font-medium"
+          aria-label="Toggle Language"
+        >
+          <i data-lucide="globe" class="w-5 h-5"></i>
+          <span class="hidden md:inline" id="translateBtnText">Translate</span>
+        </button>
+            
         <a href="/auth/logout" class="p-2 hover:bg-gray-100 rounded-full transition text-gray-500 hover:text-red-500">
           <i data-lucide="log-out" class="w-5 h-5"></i>
         </a>
@@ -43,13 +55,13 @@
       <form action="/farmer" method="GET" class="grid md:grid-cols-4 gap-4">
         <div class="md:col-span-2 relative">
           <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
-          <input type="text" name="q" value="<%= query %>" placeholder="Search for tractors, seeders..." class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50">
+          <input type="text" name="q" value="<%= query %>" placeholder="Search for tractors, seeders..." data-en="Search for tractors, seeders..." data-mr="ट्रैक्टर, सीडर्स के लिए खोजें..." data-hi="ट्रैक्टर, सीडर्स के लिए खोजें..." class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50">
         </div>
         
         <div class="relative">
           <i data-lucide="map-pin" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
           <select name="region" class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50 appearance-none">
-            <option value="">All Regions</option>
+            <option value="" data-en="All Regions" data-mr="सर्व क्षेत्र" data-hi="सभी क्षेत्र">All Regions</option>
             <% REGIONS.forEach(r => { %>
               <option value="<%= r %>" <%= region == r ? 'selected' : '' %>><%= r %></option>
             <% }) %>
@@ -57,7 +69,7 @@
         </div>
 
         <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-200 flex items-center justify-center gap-2">
-          <i data-lucide="filter" class="w-5 h-5"></i> <span data-en="Filter" data-mr="फिल्टर">Filter</span>
+          <i data-lucide="filter" class="w-5 h-5"></i> <span data-en="Filter" data-mr="फिल्टर" data-hi="फ़िल्टर">Filter</span>
         </button>
       </form>
 
@@ -102,7 +114,7 @@
                   <span class="text-xs text-gray-400 block">Price per day</span>
                   <span class="text-xl font-bold text-gray-900">₹<%= l.pricePerDay %></span>
                 </div>
-                <button class="book-now-button bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-medium transition shadow-md shadow-emerald-100" data-id="<%= l._id %>" data-name="<%= l.name %>" data-price="<%= l.pricePerDay %>" data-en="Book Now" data-mr="आता बुक करा">
+                <button class="book-now-button bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-medium transition shadow-md shadow-emerald-100" data-id="<%= l._id %>" data-name="<%= l.name %>" data-price="<%= l.pricePerDay %>" data-en="Book Now" data-mr="आता बुक करा" data-hi="अभी बुक करें">
                   Book Now
                 </button>
               </div>
@@ -113,26 +125,26 @@
             <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
               <i data-lucide="search-x" class="w-10 h-10"></i>
             </div>
-            <h3 class="text-xl font-semibold text-gray-600 mb-2" data-en="No equipment found" data-mr="कोणतीही उपकरणे सापडली नाहीत">No equipment found</h3>
-            <p class="text-gray-500" data-en="Try adjusting your search filters" data-mr="आपले शोध फिल्टर समायोजित करण्याचा प्रयत्न करा">Try adjusting your search filters</p>
+            <h3 class="text-xl font-semibold text-gray-600 mb-2" data-en="No equipment found" data-mr="कोणतीही उपकरणे सापडली नाहीत" data-hi="कोई उपकरण नहीं मिला">No equipment found</h3>
+            <p class="text-gray-500" data-en="Try adjusting your search filters" data-mr="आपले शोध फिल्टर समायोजित करण्याचा प्रयत्न करा" data-hi="अपने खोज फिल्टर समायोजित करने का प्रयास करें">Try adjusting your search filters</p>
           </div>
         <% } %>
       </div>
     </div>
 
     <!-- My Bookings Section -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-en="My Bookings" data-mr="माझे बुकिंग">My Bookings</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-en="My Bookings" data-mr="माझे बुकिंग" data-hi="मेरी बुकिंग">My Bookings</h2>
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-12">
       <% if (bookings.length > 0) { %>
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead class="bg-gray-50 border-b border-gray-100">
               <tr>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Equipment</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Dates</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" data-en="Equipment" data-mr="उपकरण" data-hi="उपकरण">Equipment</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" data-en="Dates" data-mr="तारीख" data-hi="तिथियाँ">Dates</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" data-en="Amount" data-mr="रक्कम" data-hi="राशि">Amount</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" data-en="Status" data-mr="स्थिती" data-hi="स्थिति">Status</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" data-en="Action" data-mr="क्रिया" data-hi="कार्य">Action</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -144,7 +156,7 @@
                         <i data-lucide="tractor" class="w-5 h-5"></i>
                       </div>
                       <div>
-                        <p class="font-medium text-gray-900"><%= b.listing ? b.listing.name : 'Deleted Listing' %></p>
+                        <p class="font-medium text-gray-900" data-en="<%= b.listing ? b.listing.name : 'Deleted Listing' %>" data-mr="<%= b.listing ? b.listing.name : 'हटालेली सूची' %>" data-hi="<%= b.listing ? b.listing.name : 'हटाई गई सूची' %>"><%= b.listing ? b.listing.name : 'Deleted Listing' %></p>
                         <p class="text-xs text-gray-500"><%= b.listing ? b.listing.region : 'N/A' %></p>
                       </div>
                     </div>
@@ -154,15 +166,17 @@
                   </td>
                   <td class="px-6 py-4 font-medium text-gray-900">₹<%= b.amount %></td>
                   <td class="px-6 py-4">
-                    <span class="px-3 py-1 rounded-full text-xs font-medium <%= b.status === 'confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' %>">
+                    <span class="px-3 py-1 rounded-full text-xs font-medium <%= b.status === 'confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' %>" data-en="<%= b.status %>" data-mr="<%= b.status === 'confirmed' ? 'पुष्टीकृत' : (b.status === 'pending' ? 'अपूर्ण' : 'भरले') %>" data-hi="<%= b.status === 'confirmed' ? 'पुष्टि किया गया' : (b.status === 'pending' ? 'लंबित' : 'भुगतान किया गया') %>">
                       <%= b.status %>
                     </span>
                   </td>
                   <td class="px-6 py-4">
                     <% if (b.status === 'pending') { %>
-                      <a href="/farmer/payment/<%= b._id %>" class="text-emerald-600 hover:text-emerald-700 font-medium text-sm hover:underline">Pay Now</a>
+                      <a href="/farmer/payment/<%= b._id %>" class="text-emerald-600 hover:text-emerald-700 font-medium text-sm hover:underline" data-en="Pay Now" data-mr="आता भरा" data-hi="अभी भरें">Pay Now</a>
+                    <% } else if (b.status === 'confirmed') { %>
+                      <span class="text-gray-400 text-sm" data-en="Confirmed" data-mr="पुष्टी केली" data-hi="पुष्टि किया गया">Confirmed</span>
                     <% } else { %>
-                      <span class="text-gray-400 text-sm">Paid</span>
+                      <span class="text-gray-400 text-sm" data-en="Paid" data-mr="भरले" data-hi="भुगतान किया गया">Paid</span>
                     <% } %>
                   </td>
                 </tr>
@@ -195,14 +209,14 @@
           <i data-lucide="tractor" class="w-8 h-8"></i>
         </div>
         <div>
-          <p class="text-sm text-emerald-800 font-medium">Selected Equipment</p>
+          <p class="text-sm text-emerald-800 font-medium" data-en="Selected Equipment" data-mr="निवडलेले उपकरण" data-hi="चयनित उपकरण">Selected Equipment</p>
           <p class="font-bold text-emerald-900 text-xl" id="modalEquipmentName">Tractor</p>
         </div>
       </div>
 
       <form id="bookingForm" method="POST" action="">
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-3">Number of Days</label>
+          <label class="block text-sm font-medium text-gray-700 mb-3" data-en="Number of Days" data-mr="दिवसांची संख्या" data-hi="दिनों की संख्या">Number of Days</label>
           <div class="relative flex items-center justify-center">
             <button type="button" onclick="adjustDays(-1)" class="p-3 hover:bg-gray-100 rounded-xl text-gray-500 hover:text-gray-700 transition shadow-sm">
               <i data-lucide="minus" class="w-5 h-5"></i>
@@ -216,12 +230,12 @@
         </div>
 
         <div class="flex justify-between items-center mb-8 py-4 bg-gray-50 rounded-2xl px-6">
-          <span class="text-gray-700 font-medium">Total Amount</span>
+          <span class="text-gray-700 font-medium" data-en="Total Amount" data-mr="एकूण रक्कम" data-hi="कुल राशि">Total Amount</span>
           <span class="font-bold text-emerald-600 text-3xl">₹<span id="totalAmount">0</span></span>
         </div>
 
         <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl transition shadow-lg shadow-emerald-200 hover-lift btn-glow">
-          <span class="flex items-center justify-center gap-2">
+          <span class="flex items-center justify-center gap-2" data-en="Confirm & Pay" data-mr="पुष्टी करा आणि भरा" data-hi="पुष्टि करें और भुगतान करें">
             <i data-lucide="check-circle" class="w-5 h-5"></i>
             Confirm & Pay
           </span>
@@ -231,10 +245,42 @@
   </div>
 
 
-  <script>
+  <script src="/js/translation.js"></script>
+    <script>
     if (typeof lucide !== 'undefined') {
       lucide.createIcons();
     }
+    
+    // Update translation button text based on current language
+    function updateTranslationButtonText() {
+      const btn = document.getElementById('translateBtnText');
+      if (btn) {
+        if (window.hindiTranslator && window.hindiTranslator.isHindi) {
+          btn.textContent = 'English';
+        } else {
+          btn.textContent = 'हिंदी';
+        }
+      }
+    }
+    
+    // Listen for language changes
+    const originalTranslateToHindi = window.translateToHindi;
+    const originalTranslateToEnglish = window.translateToEnglish;
+    
+    window.translateToHindi = function() {
+      originalTranslateToHindi();
+      setTimeout(updateTranslationButtonText, 100);
+    };
+    
+    window.translateToEnglish = function() {
+      originalTranslateToEnglish();
+      setTimeout(updateTranslationButtonText, 100);
+    };
+    
+    // Initialize button text when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTranslationButtonText();
+    });
     
     let currentPrice = 0;
 

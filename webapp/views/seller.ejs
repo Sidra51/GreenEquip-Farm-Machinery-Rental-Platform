@@ -1,329 +1,603 @@
 <!DOCTYPE html>
 <html lang="en" id="html">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seller Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/css/modern.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-  <style>
-    .glass {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-  </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-
-  <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="bg-lime-100 p-2 rounded-xl">
-          <i data-lucide="store" class="w-6 h-6 text-lime-600"></i>
-        </div>
-        <span class="text-xl font-bold text-gray-800 speakable" data-en="Seller Portal" data-mr="विक्रेता पोर्टल">Seller Portal</span>
-      </div>
-      
-      <div class="flex items-center gap-4">
-        <a href="/auth/logout" class="flex items-center gap-2 text-gray-500 hover:text-red-500 transition font-medium">
-          <span class="hidden md:inline">Logout</span>
-          <i data-lucide="log-out" class="w-5 h-5"></i>
-        </a>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container mx-auto px-4 py-8">
-    
-    <div class="glass rounded-3xl p-8 mb-12 animate-fade-in-up relative overflow-hidden shadow-sm border border-white/50">
-      <div class="absolute top-0 right-0 w-64 h-64 bg-lime-100 rounded-full filter blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
-      
-      <div class="relative z-10">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
-            <i data-lucide="plus" class="w-6 h-6"></i>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/modern.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <nav
+      class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200"
+    >
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center gap-3">
+          <div class="bg-lime-100 p-2 rounded-xl">
+            <i data-lucide="store" class="w-6 h-6 text-lime-600"></i>
           </div>
-          <h2 class="text-2xl font-bold text-gray-800 speakable" data-en="List New Equipment" data-mr="नवीन यंत्रसामग्री जोडा">List New Equipment</h2>
+          <span
+            class="text-xl font-bold text-gray-800 speakable"
+            data-en="Seller Portal"
+            data-mr="विक्रेता पोर्टल"
+            data-hi="विक्रेता पोर्टल"
+            >Seller Portal</span
+          >
         </div>
 
-        <form action="/seller/add" method="POST" enctype="multipart/form-data" class="grid md:grid-cols-2 gap-6">
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Equipment Name</label>
-              <input type="text" name="name" placeholder="e.g. John Deere Tractor" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50" required>
+        <div class="flex items-center gap-4">
+          <!-- Translation Button -->
+          <button
+            id="translateBtn"
+            onclick="toggleLanguage()"
+            class="flex items-center gap-2 text-gray-500 hover:text-blue-500 transition font-medium"
+            aria-label="Toggle Language"
+          >
+            <i data-lucide="globe" class="w-5 h-5"></i>
+            <span class="hidden md:inline" id="translateBtnText"
+              >Translate</span
+            >
+          </button>
+
+          <a
+            href="/auth/logout"
+            class="flex items-center gap-2 text-gray-500 hover:text-red-500 transition font-medium"
+          >
+            <span class="hidden md:inline">Logout</span>
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+      <div
+        class="glass rounded-3xl p-8 mb-12 animate-fade-in-up relative overflow-hidden shadow-sm border border-white/50"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-lime-100 rounded-full filter blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"
+        ></div>
+
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-6">
+            <div
+              class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600"
+            >
+              <i data-lucide="plus" class="w-6 h-6"></i>
             </div>
-            
-            <div class="grid grid-cols-2 gap-4">
+            <h2
+              class="text-2xl font-bold text-gray-800 speakable"
+              data-en="List New Equipment"
+              data-mr="नवीन यंत्रसामग्री जोडा"
+              data-hi="नया उपकरण सूचीबद्ध करें"
+            >
+              List New Equipment
+            </h2>
+          </div>
+
+          <form
+            action="/seller/add"
+            method="POST"
+            enctype="multipart/form-data"
+            class="grid md:grid-cols-2 gap-6"
+          >
+            <div class="space-y-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select name="category" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50" required>
-                  <% CATEGORIES.forEach(c => { %>
-                    <option value="<%= c %>"><%= c.charAt(0).toUpperCase() + c.slice(1) %></option>
-                  <% }) %>
-                </select>
+                <label
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  data-en="Equipment Name"
+                  data-mr="उपकरणाचे नाव"
+                  data-hi="उपकरण का नाम"
+                  >Equipment Name</label
+                >
+                <input
+                  type="text"
+                  name="name"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50"
+                  required
+                />
               </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Region</label>
-                <select name="region" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50" required>
-                  <% REGIONS.forEach(r => { %>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    data-en="Category"
+                    data-mr="श्रेणी"
+                    data-hi="श्रेणी"
+                    >Category</label
+                  >
+                  <select
+                    name="category"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50"
+                    required
+                  >
+                    <% CATEGORIES.forEach(c => { %>
+                    <option value="<%= c %>">
+                      <%= c.charAt(0).toUpperCase() + c.slice(1) %>
+                    </option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    data-en="Region"
+                    data-mr="क्षेत्र"
+                    data-hi="क्षेत्र"
+                    >Region</label
+                  >
+                  <select
+                    name="region"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50"
+                    required
+                  >
+                    <% REGIONS.forEach(r => { %>
                     <option value="<%= r %>"><%= r %></option>
-                  <% }) %>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Seller Name</label>
-              <input type="text" name="sellerName" value="<%= sellerName %>" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50" required>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Price per Day (₹)</label>
-                <input type="number" id="pricePerDay" name="pricePerDay" placeholder="2500" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50" required>
-                <p id="priceError" class="text-red-500 text-xs mt-1"></p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Age (Years)</label>
-                <input type="number" name="ageInYears" placeholder="2" min="0" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50" required>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Equipment Image</label>
-              <div id="uploadContainer" class="relative h-64 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 hover:bg-gray-100 transition cursor-pointer group overflow-hidden flex items-center justify-center">
-                <input type="file" name="img" id="imageInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
-                
-                <div id="uploadPlaceholder" class="text-center transition-all duration-300">
-                  <div class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition">
-                    <i data-lucide="image-plus" class="w-6 h-6 text-emerald-500"></i>
-                  </div>
-                  <p class="text-sm font-medium text-gray-700 group-hover:text-emerald-600 transition">Click to upload image</p>
-                  <p class="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB</p>
-                </div>
-
-                <img id="imagePreview" src="" alt="Preview" class="absolute inset-0 w-full h-full object-cover hidden z-10">
-                
-                <div id="changeOverlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10 hidden flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div class="bg-white/20 p-3 rounded-full mb-2 backdrop-blur-md">
-                    <i data-lucide="refresh-cw" class="w-6 h-6 text-white"></i>
-                  </div>
-                  <p class="text-white font-bold text-sm shadow-sm">Change Image</p>
+                    <% }) %>
+                  </select>
                 </div>
               </div>
+
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  data-en="Seller Name"
+                  data-mr="विक्रेताचे नाव"
+                  data-hi="विक्रेता का नाम"
+                  >Seller Name</label
+                >
+                <input
+                  type="text"
+                  name="sellerName"
+                  value="<%= sellerName %>"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50"
+                  required
+                />
+              </div>
             </div>
 
-            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-200 flex items-center justify-center gap-2 mt-2">
-              <i data-lucide="check-circle" class="w-5 h-5"></i> <span data-en="Publish Listing" data-mr="यादी प्रकाशित करा">Publish Listing</span>
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    data-en="Price per Day (₹)"
+                    data-mr="दररोजची किंमत (₹)"
+                    data-hi="प्रति दिन कीमत (₹)"
+                    >Price per Day (₹)</label
+                  >
+                  <input
+                    type="number"
+                    id="pricePerDay"
+                    name="pricePerDay"
+                    placeholder="2500"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50"
+                    required
+                  />
+                  <p id="priceError" class="text-red-500 text-xs mt-1"></p>
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    data-en="Age (Years)"
+                    data-mr="वय (वर्षे)"
+                    data-hi="आयु (वर्ष)"
+                    >Age (Years)</label
+                  >
+                  <input
+                    type="number"
+                    name="ageInYears"
+                    placeholder="2"
+                    min="0"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition bg-white/50"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  data-en="Equipment Image"
+                  data-mr="उपकरणाची माहिती"
+                  data-hi="उपकरण का चित्र"
+                  >Equipment Image</label
+                >
+                <div
+                  id="uploadContainer"
+                  class="relative h-64 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 hover:bg-gray-100 transition cursor-pointer group overflow-hidden flex items-center justify-center"
+                >
+                  <input
+                    type="file"
+                    name="img"
+                    id="imageInput"
+                    accept="image/*"
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                  />
+
+                  <div
+                    id="uploadPlaceholder"
+                    class="text-center transition-all duration-300"
+                  >
+                    <div
+                      class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition"
+                    >
+                      <i
+                        data-lucide="image-plus"
+                        class="w-6 h-6 text-emerald-500"
+                      ></i>
+                    </div>
+                    <p
+                      class="text-sm font-medium text-gray-700 group-hover:text-emerald-600 transition"
+                      data-en="Click to upload image"
+                      data-mr="इमेज अपलोड करण्यासाठी क्लिक करा"
+                      data-hi="चित्र अपलोड करने के लिए क्लिक करें"
+                    >
+                      Click to upload image
+                    </p>
+                    <p
+                      class="text-xs text-gray-400 mt-1"
+                      data-en="PNG, JPG up to 5MB"
+                      data-mr="पीएनजी, जेपीजी 5 एमबी पर्यंत"
+                      data-hi="पीएनजी, जेपीजी 5 एमबी तक"
+                    >
+                      PNG, JPG up to 5MB
+                    </p>
+                  </div>
+
+                  <img
+                    id="imagePreview"
+                    src=""
+                    alt="Preview"
+                    class="absolute inset-0 w-full h-full object-cover hidden z-10"
+                  />
+
+                  <div
+                    id="changeOverlay"
+                    class="absolute inset-0 bg-black/40 backdrop-blur-sm z-10 hidden flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  >
+                    <div
+                      class="bg-white/20 p-3 rounded-full mb-2 backdrop-blur-md"
+                    >
+                      <i
+                        data-lucide="refresh-cw"
+                        class="w-6 h-6 text-white"
+                      ></i>
+                    </div>
+                    <p
+                      class="text-white font-bold text-sm shadow-sm"
+                      data-en="Change Image"
+                      data-mr="इमेज बदला"
+                      data-hi="चित्र बदलें"
+                    >
+                      Change Image
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-emerald-200 flex items-center justify-center gap-2 mt-2"
+              >
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                <span
+                  data-en="Publish Listing"
+                  data-mr="यादी प्रकाशित करा"
+                  data-hi="सूची प्रकाशित करें"
+                  >Publish Listing</span
+                >
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <div class="flex items-center justify-between mb-6">
+            <h2
+              class="text-2xl font-bold text-gray-800 speakable"
+              data-en="My Listings"
+              data-mr="माझी यादी"
+              data-hi="मेरी सूचियाँ"
+            >
+              My Listings
+            </h2>
+            <button
+              onclick="refreshListings()"
+              class="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition"
+            >
+              <i data-lucide="refresh-cw" class="w-5 h-5"></i>
             </button>
           </div>
-        </form>
-      </div>
-    </div>
 
-    <div class="grid lg:grid-cols-3 gap-8">
-      
-      <div class="lg:col-span-2">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-2xl font-bold text-gray-800 speakable" data-en="My Listings" data-mr="माझी यादी">My Listings</h2>
-          <button onclick="refreshListings()" class="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition"><i data-lucide="refresh-cw" class="w-5 h-5"></i></button>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
-          <% if (listings && listings.length > 0) { %>
-            <% listings.forEach(l => { %>
-              <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition group">
-                <div class="w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden relative">
-                  <% if (l.img) { %>
-                    <img src="<%= l.img %>" alt="<%= l.name %>" class="w-full h-full object-cover">
-                  <% } else { %>
-                    <div class="w-full h-full flex items-center justify-center text-gray-400">
-                      <i data-lucide="image" class="w-8 h-8"></i>
-                    </div>
-                  <% } %>
-                  <div class="absolute top-2 right-2">
-                    <span class="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider <%= l.available ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' %>">
-                      <%= l.available ? 'Active' : 'Rented' %>
-                    </span>
-                  </div>
+          <div class="grid md:grid-cols-2 gap-6">
+            <% if (listings && listings.length > 0) { %> <%
+            listings.forEach(function(l) { %>
+            <div
+              class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition group"
+            >
+              <div
+                class="w-24 h-24 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden relative"
+              >
+                <% if (l.img) { %>
+                <img
+                  src="<%= l.img %>"
+                  alt="<%= l.name %>"
+                  class="w-full h-full object-cover"
+                />
+                <% } else { %>
+                <div
+                  class="w-full h-full flex items-center justify-center text-gray-400"
+                >
+                  <i data-lucide="image" class="w-8 h-8"></i>
                 </div>
-                <div class="flex-1 flex flex-col">
-                  <h3 class="font-bold text-gray-900 mb-1"><%= l.name %></h3>
-                  <p class="text-xs text-gray-500 mb-3"><%= l.region %> • <%= l.ageInYears %> yrs old</p>
-                  <div class="mt-auto flex justify-between items-center pt-3 border-t border-gray-50">
-                    <span class="font-bold text-emerald-600">₹<%= l.pricePerDay %>/day</span>
-                    <button class="text-gray-400 hover:text-red-500 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                  </div>
+                <% } %>
+                <div class="absolute top-2 right-2">
+                  <span
+                    class="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider <%= l.available ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' %>"
+                  >
+                    <%= l.available ? 'Active' : 'Rented' %>
+                  </span>
                 </div>
               </div>
-            <% }) %>
-          <% } else { %>
-            <div class="col-span-full py-8 text-center bg-white rounded-2xl border border-dashed border-gray-200">
-              <p class="text-gray-500">No listings yet. Add your first equipment above!</p>
+              <div class="flex-1 flex flex-col">
+                <h3 class="font-bold text-gray-900 mb-1"><%= l.name %></h3>
+                <p class="text-xs text-gray-500 mb-3">
+                  <%= l.region %> • <%= l.ageInYears %> yrs old
+                </p>
+                <div
+                  class="mt-auto flex justify-between items-center pt-3 border-t border-gray-50"
+                >
+                  <span class="font-bold text-emerald-600"
+                    >₹<%= l.pricePerDay %>/day</span
+                  >
+                  <button class="text-gray-400 hover:text-red-500 transition">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          <% } %>
+            <% }); %> <% } else { %>
+            <div
+              class="col-span-full py-8 text-center bg-white rounded-2xl border border-dashed border-gray-200"
+            >
+              <p
+                class="text-gray-500"
+                data-en="No listings yet. Add your first equipment above!"
+                data-mr="अद्याप कोणतीही यादी नाही. वर तुमचे पहिले उपकरण जोडा!"
+                data-hi="अभी तक कोई सूची नहीं है। ऊपर अपना पहला उपकरण जोड़ें!"
+              >
+                No listings yet. Add your first equipment above!
+              </p>
+            </div>
+            <% } %>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 speakable" data-en="Recent Orders" data-mr="अलीकडील ऑर्डर्स">Recent Orders</h2>
-        <div class="space-y-4">
-          <% if (orders && orders.length > 0) { %>
-            <% orders.forEach(function(order) { %>
-              <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer" onclick="showOrderDetails('<%= JSON.stringify(order) %>')">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-bold text-gray-800"><%= order.listing.name %></h3>
-                  <span class="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-md">Paid</span>
-                </div>
-                <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                  <i data-lucide="user" class="w-4 h-4"></i> <%= order.farmer.name %>
-                </div>
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-gray-400"><%= new Date(order.createdAt).toLocaleDateString() %></span>
-                  <span class="font-bold text-emerald-600">₹<%= order.amount %></span>
-                </div>
+        <div>
+          <h2
+            class="text-2xl font-bold text-gray-800 mb-6 speakable"
+            data-en="Recent Orders"
+            data-mr="अलीकडील ऑर्डर्स"
+            data-hi="हाल के ऑर्डर"
+          >
+            Recent Orders
+          </h2>
+          <div class="space-y-4">
+            <% if (orders && orders.length > 0) { %> <%
+            orders.forEach(function(order) { %>
+            <div
+              class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer"
+              onclick="showOrderDetails('<%= JSON.stringify(order) %>')"
+            >
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-gray-800">
+                  <%= order.listing.name %>
+                </h3>
+                <span
+                  class="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-md"
+                  >Paid</span
+                >
               </div>
-            <% }) %>
-          <% } else { %>
-            <div class="bg-white p-8 rounded-2xl border border-dashed border-gray-200 text-center">
-              <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400">
+              <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                <i data-lucide="user" class="w-4 h-4"></i> <%= order.farmer.name
+                %>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-400"
+                  ><%= new Date(order.createdAt).toLocaleDateString() %></span
+                >
+                <span class="font-bold text-emerald-600"
+                  >₹<%= order.amount %></span
+                >
+              </div>
+            </div>
+            <% }); %> <% } else { %>
+            <div
+              class="bg-white p-8 rounded-2xl border border-dashed border-gray-200 text-center"
+            >
+              <div
+                class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400"
+              >
                 <i data-lucide="inbox" class="w-6 h-6"></i>
               </div>
-              <p class="text-gray-500 text-sm">No orders received yet.</p>
+              <p
+                class="text-gray-500 text-sm"
+                data-en="No orders received yet."
+                data-mr="अद्याप कोणतेही ऑर्डर प्राप्त झालेले नाहीत."
+                data-hi="अभी तक कोई ऑर्डर प्राप्त नहीं हुआ है।"
+              >
+                No orders received yet.
+              </p>
             </div>
-          <% } %>
+            <% } %>
+          </div>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <div id="orderModal" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="document.getElementById('orderModal').classList.add('hidden')"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 animate-fade-in-up">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-bold text-gray-900">Order Details</h3>
-        <button onclick="document.getElementById('orderModal').classList.add('hidden')" class="p-2 hover:bg-gray-100 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div id="orderModal" class="fixed inset-0 z-50 hidden">
+      <div
+        class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onclick="document.getElementById('orderModal').classList.add('hidden')"
+      ></div>
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 animate-fade-in-up"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-bold text-gray-900">Order Details</h3>
+          <button
+            onclick="document.getElementById('orderModal').classList.add('hidden')"
+            class="p-2 hover:bg-gray-100 rounded-full transition"
+          >
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div id="orderDetails" class="space-y-4 text-gray-600"></div>
       </div>
-      <div id="orderDetails" class="space-y-4 text-gray-600"></div>
     </div>
-  </div>
 
-  <div id="message" class="fixed top-4 right-4 z-50 hidden animate-fade-in-up"></div>
+    <div
+      id="message"
+      class="fixed top-4 right-4 z-50 hidden animate-fade-in-up"
+    ></div>
 
-  <script>
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
-    
-    // Price validation logic
-    const priceInput = document.getElementById("pricePerDay");
-    const equipmentInput = document.querySelector("input[name='name']");
-    const priceError = document.getElementById("priceError");
-    let timeout = null;
+    <script src="/js/translation.js"></script>
+    <script>
+      if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+      }
 
-    if(priceInput) {
+      // Price validation logic
+      const priceInput = document.getElementById("pricePerDay");
+      const equipmentInput = document.querySelector("input[name='name']");
+      const priceError = document.getElementById("priceError");
+      let timeout = null;
+
+      if (priceInput) {
         priceInput.addEventListener("input", () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
             const price = priceInput.value;
             const equipment = equipmentInput.value;
-            if (!price || !equipment) { priceError.textContent = ""; return; }
+            if (!price || !equipment) {
+              priceError.textContent = "";
+              return;
+            }
 
             fetch("/seller/validate-price", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ equipment, price })
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ equipment, price }),
             })
-            .then(res => res.json())
-            .then(data => {
-            if (!data.valid) priceError.textContent = data.message;
-            else priceError.textContent = "";
-            })
-            .catch(err => console.error(err));
-        }, 500);
+              .then((res) => res.json())
+              .then((data) => {
+                if (!data.valid) priceError.textContent = data.message;
+                else priceError.textContent = "";
+              })
+              .catch((err) => console.error(err));
+          }, 500);
         });
-    }
+      }
 
-    function showOrderDetails(orderJson) {
-      try {
+      function showOrderDetails(orderJson) {
+        try {
           const order = JSON.parse(orderJson);
           const details = `
             <div class="bg-gray-50 p-4 rounded-xl mb-4">
-              <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Equipment</p>
+              <p class="text-xs text-gray-500 uppercase tracking-wide mb-1" data-en="Equipment" data-mr="उपकरण" data-hi="उपकरण">Equipment</p>
               <p class="font-bold text-gray-900">${order.listing.name}</p>
             </div>
             <div class="grid grid-cols-2 gap-4 mb-4">
               <div>
-                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Farmer</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1" data-en="Farmer" data-mr="शेतकरी" data-hi="किसान">Farmer</p>
                 <p class="font-medium text-gray-900">${order.farmer.name}</p>
                 <p class="text-xs text-gray-500">${order.farmer.email}</p>
               </div>
               <div>
-                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Amount</p>
+                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1" data-en="Amount" data-mr="रक्कम" data-hi="राशि">Amount</p>
                 <p class="font-bold text-emerald-600">₹${order.amount}</p>
               </div>
             </div>
             <div>
-              <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Transaction Hash</p>
-              <p class="font-mono text-xs bg-gray-100 p-2 rounded break-all">${order.txHash || 'N/A'}</p>
+              <p class="text-xs text-gray-500 uppercase tracking-wide mb-1" data-en="Transaction Hash" data-mr="व्यवहार हॅश" data-hi="लेनदेन हैश">Transaction Hash</p>
+              <p class="font-mono text-xs bg-gray-100 p-2 rounded break-all">${
+                order.txHash || "N/A"
+              }</p>
             </div>
           `;
-          document.getElementById('orderDetails').innerHTML = details;
-          document.getElementById('orderModal').classList.remove('hidden');
-      } catch (e) {
+          document.getElementById("orderDetails").innerHTML = details;
+          document.getElementById("orderModal").classList.remove("hidden");
+        } catch (e) {
           console.error("Error parsing order details", e);
-      }
-    }
-
-    function refreshListings() {
-      window.location.reload();
-    }
-
-    // Image Preview Logic
-    const imageInput = document.getElementById('imageInput');
-    const imagePreview = document.getElementById('imagePreview');
-    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-    const changeOverlay = document.getElementById('changeOverlay');
-    const uploadContainer = document.getElementById('uploadContainer');
-
-    if (imageInput) {
-      imageInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.classList.remove('hidden');
-            uploadPlaceholder.classList.add('hidden');
-            
-            // Enable overlay
-            changeOverlay.classList.remove('hidden');
-            changeOverlay.classList.add('flex'); // Ensure flex is added back
-            
-            // Remove border for cleaner look
-            uploadContainer.classList.remove('border-dashed', 'border-2', 'border-gray-300');
-            uploadContainer.classList.add('border-0');
-          }
-          reader.readAsDataURL(file);
-        } else {
-          imagePreview.src = '';
-          imagePreview.classList.add('hidden');
-          uploadPlaceholder.classList.remove('hidden');
-          
-          changeOverlay.classList.add('hidden');
-          changeOverlay.classList.remove('flex');
-          
-          uploadContainer.classList.add('border-dashed', 'border-2', 'border-gray-300');
-          uploadContainer.classList.remove('border-0');
         }
-      });
-    }
-  </script>
-</body>
+      }
+
+      function refreshListings() {
+        window.location.reload();
+      }
+
+      // Image Preview Logic
+      const imageInput = document.getElementById("imageInput");
+      const imagePreview = document.getElementById("imagePreview");
+      const uploadPlaceholder = document.getElementById("uploadPlaceholder");
+      const changeOverlay = document.getElementById("changeOverlay");
+      const uploadContainer = document.getElementById("uploadContainer");
+
+      if (imageInput) {
+        imageInput.addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              imagePreview.src = e.target.result;
+              imagePreview.classList.remove("hidden");
+              uploadPlaceholder.classList.add("hidden");
+
+              // Enable overlay
+              changeOverlay.classList.remove("hidden");
+              changeOverlay.classList.add("flex"); // Ensure flex is added back
+
+              // Remove border for cleaner look
+              uploadContainer.classList.remove(
+                "border-dashed",
+                "border-2",
+                "border-gray-300"
+              );
+              uploadContainer.classList.add("border-0");
+            };
+            reader.readAsDataURL(file);
+          } else {
+            imagePreview.src = "";
+            imagePreview.classList.add("hidden");
+            uploadPlaceholder.classList.remove("hidden");
+
+            changeOverlay.classList.add("hidden");
+            changeOverlay.classList.remove("flex");
+
+            uploadContainer.classList.add(
+              "border-dashed",
+              "border-2",
+              "border-gray-300"
+            );
+            uploadContainer.classList.remove("border-0");
+          }
+        });
+      }
+    </script>
+  </body>
 </html>

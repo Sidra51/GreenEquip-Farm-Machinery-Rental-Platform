@@ -4,3 +4,8 @@ langchain-google-genai
 google-generativeai
 python-dotenv
 streamlit
+tensorflow
+opencv-python
+scikit-learn
+numpy
+pandas
