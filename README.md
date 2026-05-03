@@ -99,7 +99,7 @@ Follow these steps to set up the project locally.
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/Farmchain.git
+    git clone https://github.com/Sidra51/Farmchain.git
     cd Farmchain
     ```
 
